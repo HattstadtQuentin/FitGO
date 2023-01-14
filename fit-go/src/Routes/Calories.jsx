@@ -2,8 +2,9 @@ import React from 'react';
 import '../styles/Routes/Calories.scss';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faPlus, faMugSaucer, faBurger, faHotdog, faAppleWhole } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from "react-router-dom";
 
 
 export default function Calories() {
@@ -30,25 +31,25 @@ export default function Calories() {
                 <div className="title">
                     Calories
                 </div>
-                <details class="custom-select">
-                    <summary class="radios">
+                <details className="custom-select">
+                    <summary className="radios">
                         <input type="radio" name="item" id="default" title="24 Heures" checked/>
                         <input type="radio" name="item" id="item1" title="7 jours"/>
                         <input type="radio" name="item" id="item2" title="1 mois"/>
                     </summary>
-                    <ul class="list">
+                    <ul className="list">
                         <li>
-                            <label for="default">
+                            <label htmlFor="default">
                                 24 Heures
                             </label>
                         </li>
                         <li>
-                            <label for="item1">
+                            <label htmlFor="item1">
                                 7 jours
                             </label>
                         </li>
                         <li>
-                            <label for="item2">
+                            <label htmlFor="item2">
                                 1 mois
                             </label>
                         </li>
@@ -88,7 +89,7 @@ export default function Calories() {
                             Apport nutritionnel journalier
                         </div>
                         <div className='content'>
-                            Macronutriments consomés (Glucides, Proteines, Lipides)
+                            Macronutriments consomés (Glucides, Protéines, Lipides)
                         </div>
                     </div>
                     <div className='Stats'>
@@ -138,6 +139,7 @@ export default function Calories() {
                 Aujourd'hui, 14 JANV.
             </div>
             <div className='FoodContainer'>
+                <NavLink to = "food/breakfast">
                 <div className='petitDejContainer foodCard'>
                     <FontAwesomeIcon className="primaryIcon" icon={faMugSaucer} />
                     <div className='informationsContainer'>
@@ -152,6 +154,8 @@ export default function Calories() {
                         <FontAwesomeIcon icon={faPlus} />
                     </div>
                 </div>
+                </NavLink>
+                <NavLink to = "food/lunch">
                 <div className='dejeunerContaier foodCard'>
                     <FontAwesomeIcon className="primaryIcon" icon={faBurger} />
                     <div className='informationsContainer'>
@@ -166,6 +170,8 @@ export default function Calories() {
                         <FontAwesomeIcon icon={faPlus} />
                     </div>
                 </div>
+                </NavLink>
+                <NavLink to = "food/dinner">
                 <div className='dinerContainer foodCard'>
                     <FontAwesomeIcon className="primaryIcon" icon={faHotdog} />
                     <div className='informationsContainer'>
@@ -180,6 +186,8 @@ export default function Calories() {
                         <FontAwesomeIcon icon={faPlus} />
                     </div>
                 </div>
+                </NavLink>
+                <NavLink to = "food/snack">
                 <div className='snackContainer foodCard'>
                     <FontAwesomeIcon className="primaryIcon" icon={faAppleWhole} />
                     <div className='informationsContainer'>
@@ -194,6 +202,7 @@ export default function Calories() {
                         <FontAwesomeIcon icon={faPlus} />
                     </div>
                 </div>
+                </NavLink>
             </div>
         </div>
     );

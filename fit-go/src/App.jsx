@@ -6,7 +6,7 @@ import {
 import "./styles/App.scss";
 
 import NavBar from './Components/NavBar.jsx';
-import SearchFood from "./Components/SearchFood.jsx";
+import SearchFood from "./Routes/SearchFood.jsx";
 import Calories from "./Routes/Calories.jsx";
 
 
@@ -16,7 +16,7 @@ export default function App(){
     <div>
       <Routes>
         <Route exact path="/calories" element={<Calories/>}/>
-        <Route path="/calories/food" element={<SearchFood />} />
+        <Route path="/calories/food/:menu" element={<SearchFood />} />
       </Routes>
       <NavBar/>
     </div>

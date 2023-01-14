@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faBowlFood, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faBowlFood, faFireFlameCurved, faUserGear } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from "react-router-dom";
 import '../styles/Components/NavBar.scss';
 
@@ -10,6 +10,7 @@ export default function NavBar() {
         <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faHouse} /></NavLink>
         <NavLink to="/program"><FontAwesomeIcon icon={faFireFlameCurved} /></NavLink>
         <NavLink to="/calories"><FontAwesomeIcon icon={faBowlFood} /></NavLink>
+        <NavLink to="/settings"><FontAwesomeIcon icon={faUserGear} /></NavLink>
     </div>
   );
 }

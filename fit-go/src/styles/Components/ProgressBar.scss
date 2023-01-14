@@ -1,0 +1,14 @@
+@import "../Global.scss";
+
+.ProgressBar {
+    height: 20%;
+    width: 100%;
+    background-color: $primary--dark;
+    border-radius: 50px;
+
+    .ProgressContainer {
+        height: 100%;
+        border-radius: 50px;
+        text-align: 'right';
+    }
+}
