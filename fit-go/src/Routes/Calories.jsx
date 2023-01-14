@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/Routes/Calories.scss';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Calories() {
@@ -130,6 +132,10 @@ export default function Calories() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className='daySelector'>
+                <FontAwesomeIcon icon={faCalendarDays} />
+                Aujourd'hui, 14 JANV.
             </div>
             <div className='FoodContainer'>
 
