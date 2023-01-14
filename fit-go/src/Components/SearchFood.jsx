@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import '../App.css';
+import '../styles/Components/SearchFood.scss';
 
 import GetFoodByName from '../Hooks/GetFoodByName';
 
@@ -13,7 +13,7 @@ export default function SearchFood() {
 
   const GetFoodName = useMemo(() => getFoodByName(searchFoodName), [searchFoodName]);
   return (
-    <div className="App">
+    <div className="searchFoodContainer">
       <div className='searchFoodContent'>
           <input
             className='searchFood'
@@ -23,12 +23,7 @@ export default function SearchFood() {
           />
           <button onClick={() => setSearchFoodName(foodName)}></button>
         </div>
-      <header className="App-header">
-       
-        
-        
-        Result {foodName} :  {GetFoodName}
-      </header>
+
     </div>
   );
 }

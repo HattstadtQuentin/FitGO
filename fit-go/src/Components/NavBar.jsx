@@ -9,7 +9,7 @@ export default function NavBar() {
     <div className="NavBar">
         <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faHouse} /></NavLink>
         <NavLink to="/program"><FontAwesomeIcon icon={faFireFlameCurved} /></NavLink>
-        <NavLink to="/food"><FontAwesomeIcon icon={faBowlFood} /></NavLink>
+        <NavLink to="/calories"><FontAwesomeIcon icon={faBowlFood} /></NavLink>
     </div>
   );
 }

@@ -1,0 +1,251 @@
+@import "../Global.scss";
+
+.Calories {
+    display: flex;
+    flex-direction: column;
+    padding: 10% 2%;
+
+    .Header {
+        font-family: $titleFont;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        details {
+            position: relative;
+            width: 40%;
+            color: white;
+            font-size: 1rem;
+        }
+        details[open] {
+            z-index: 1;
+            summary {
+                &:before {
+                    content: '';
+                    display: block;
+                    width: 100vw;
+                    height: 100vh;
+                    background: transparent;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                }
+                &:after {
+                    transform: rotate(-45deg) translate(0%, 0%);
+                }
+            }
+        }
+        summary {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 50px;
+            background-color: $secondary--dark;
+            font-family: $globalFont;
+            list-style: none;
+            &::-webkit-details-marker {
+                display: none;
+            }
+            &:after {
+                content: '';
+                display: inline-block;
+                float: right;
+                width: .5rem;
+                height: .5rem;
+                border-bottom: 1px solid currentColor;
+                border-left: 1px solid currentColor;
+                border-bottom-left-radius: 2px;
+                transform: rotate(45deg) translate(50%, 0%);
+                transform-origin: center center;
+                transition: transform ease-in-out 100ms;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+        ul {
+            list-style: none;
+            width: 100%;
+            background: $secondary--dark;
+            position: absolute;
+            top: calc(100% + .5rem);
+            left: 0;
+            font-family: $globalFont;
+            margin: 0;
+            padding: 10% 10%;
+            box-sizing: border-box;
+            border-radius: 25px;
+            overflow-y: auto;
+
+            li {
+                padding: 15% 0;
+                border-bottom: 1px solid #ccc;
+                &:first-child {
+                    padding-top: 0;
+                }
+                &:last-child {
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
+        }
+        
+        summary.radios {
+            &:before {
+                content: var(--selection);
+            }
+        }
+        input[type=radio] {
+            counter-increment: radios;
+            appearance: none;
+            display: none;
+            &:checked {
+                display: inline;
+                --display: block;
+            }
+            &:after {
+                content: attr(title);
+                display: inline;
+                font-size: 1rem;
+            }
+        }
+        ul.list {
+            counter-reset: labels;
+        }
+        label {
+            width: 100%;
+            display: flex;
+            cursor: pointer;
+            justify-content: space-between;
+            span {
+                --display: none;
+                display: var(--display);
+                width: 1rem;
+                height: 1rem;
+                border: 1px solid #727272;
+                border-radius: 3px;
+            }
+        }
+    }
+
+    .StatsContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 38vh;
+
+        .StatsGlobal {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 20%;
+            justify-content: space-between;
+
+            .StatsCard {
+                display: flex;
+                flex-direction: column;
+
+                .CardContent {
+                    font-family: $titleFont;
+                    font-size: 1.5rem;
+                }
+
+                .CardTitle {
+                    font-family: $globalFont;
+                    color: $secondary-font--dark;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        .StatsDetail {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 75%;
+            justify-content: space-between;
+            background: $secondary--dark;
+            border-radius: 25px;
+            font-family: $globalFont;
+            padding: 5%;
+
+            .StatsTitle {
+                display: flex;
+                flex-direction: column;
+
+                .title {
+                    font-size: 1rem;
+                    margin-bottom: 5px;
+                }
+
+                .content {
+                    font-size: .8rem;
+                    color: $secondary-font--dark;
+                }
+            }
+
+            .Stats {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .Chart {
+                    width: 45%;
+                }
+
+                .ChartLabel {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 5% 0;
+                    justify-content: space-between;
+                    width: 45%;
+                    height: 60%;
+                    font-size: 0.8rem;
+
+                    .label {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        width: 100%;
+                        align-items: center;
+
+                        &:nth-child(1) .color{
+                            background-color: $chart-color-one;
+                        }
+
+                        &:nth-child(2) .color{
+                            background-color: $chart-color-two;
+                        }
+
+                        &:nth-child(3) .color{
+                            background-color: $chart-color-three;
+                        }
+
+                        .labelContainer {
+                            display: flex;
+                            flex-direction:  row;
+                            .color {
+                                border-radius: 50px;
+                                width: 3vw;
+                                height: 3vw;
+                                margin-right: 5px;
+                            }
+    
+                            .text {
+    
+                            }
+                        }
+
+                    }
+
+
+                }
+            }
+        }
+    }
+}
