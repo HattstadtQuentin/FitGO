@@ -3,7 +3,7 @@ import '../styles/Routes/Calories.scss';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faPlus, faMugSaucer, faBurger, faHotdog, faAppleWhole } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Calories() {
@@ -138,7 +138,62 @@ export default function Calories() {
                 Aujourd'hui, 14 JANV.
             </div>
             <div className='FoodContainer'>
-
+                <div className='petitDejContainer foodCard'>
+                    <FontAwesomeIcon className="primaryIcon" icon={faMugSaucer} />
+                    <div className='informationsContainer'>
+                        <div className='title'>
+                            Petit dejeuner
+                        </div>
+                        <div className='description'>
+                            Recommandés: 500 kcal
+                        </div>
+                    </div>
+                    <div className='plusBtn'>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
+                </div>
+                <div className='dejeunerContaier foodCard'>
+                    <FontAwesomeIcon className="primaryIcon" icon={faBurger} />
+                    <div className='informationsContainer'>
+                        <div className='title'>
+                            Dejeuner
+                        </div>
+                        <div className='description'>
+                            Recommandés: 1500 kcal
+                        </div>
+                    </div>
+                    <div className='plusBtn'>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
+                </div>
+                <div className='dinerContainer foodCard'>
+                    <FontAwesomeIcon className="primaryIcon" icon={faHotdog} />
+                    <div className='informationsContainer'>
+                        <div className='title'>
+                            Diner
+                        </div>
+                        <div className='description'>
+                            Recommandés: 900 kcal
+                        </div>
+                    </div>
+                    <div className='plusBtn'>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
+                </div>
+                <div className='snackContainer foodCard'>
+                    <FontAwesomeIcon className="primaryIcon" icon={faAppleWhole} />
+                    <div className='informationsContainer'>
+                    <div className='title'>
+                            Snack
+                        </div>
+                        <div className='description'>
+                            Recommandés: 200 kcal
+                        </div>
+                    </div>
+                    <div className='plusBtn'>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
+                </div>
             </div>
         </div>
     );
