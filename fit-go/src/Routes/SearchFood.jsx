@@ -2,14 +2,15 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/Routes/SearchFood.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faList, faHeart, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faList, faHeart, faClockRotateLeft, faTrash, faSpoon } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from "react-router-dom";
 
 import GetFoodByName from '../Hooks/GetFoodByName';
 import ProgressBar from '../Components/ProgressBar';
+import ModalAliment from '../Components/Modals/ModalAliment.jsx';
 
-function getFoodByName(foodName) {
-  return <GetFoodByName foodName={foodName}/>;
+function getFoodByName(foodName, setModalState) {
+  return <GetFoodByName foodName={foodName} openModal={setModalState} />;
 }
 
 const testData = [
@@ -19,6 +20,11 @@ const testData = [
 ];
 
 export default function SearchFood() {
+  const [actualFoodData, setActualFoodData] = useState(null);
+  const [favoriteFoodData, setFavoriteFoodData] = useState(null);
+  const [historicFoodData, setHistoricFoodData] = useState(null);
+
+
   const [searchFoodName, setSearchFoodName] = useState('');
   const [foodName, setFoodName] = useState('');
   let { menu } = useParams();
@@ -26,6 +32,8 @@ export default function SearchFood() {
   const [foodSearchType, setFoodSearchType] = useState('actual');
 
   const [isSearchOn, setIsSearchOn] = useState(false);
+
+  const [modalState, setModalState] = useState([false, null]);
 
   useEffect(() => {
 
@@ -48,7 +56,7 @@ export default function SearchFood() {
 }, [menu]);
 
 
-  const GetFoodName = useMemo(() => getFoodByName(searchFoodName), [searchFoodName]);
+  const GetFoodName = useMemo(() => getFoodByName(searchFoodName, setModalState), [searchFoodName]);
   return (
     
     <div className="searchFoodContainer">
@@ -64,9 +72,9 @@ export default function SearchFood() {
             value={foodName}
             placeholder="Aliments..."
             onChange={(e) => setFoodName(e.target.value)}
-            onFocus={() => setIsSearchOn(true)} onBlur={() => setIsSearchOn(false)}
+            onFocus={() => setIsSearchOn(true)} onBlur={(e) => e.target.value !== '' ? '' : setIsSearchOn(false)}
           />
-          {/* <button onClick={() => setSearchFoodName(foodName)}>RECHERCHER</button> */}
+          {isSearchOn &&  <button onClick={() => setSearchFoodName(foodName)}>RECHERCHER</button> }
       </div>
       {
         !isSearchOn && 
@@ -108,10 +116,101 @@ export default function SearchFood() {
               <FontAwesomeIcon icon={faClockRotateLeft} />
             </div>
           </div>
+          {
+            <div className='FoodList'>
+              { foodSearchType === 'actual' && 
+                <div className='FoodListTitle'>
+                    VOTRE MENU DU JOUR
+                </div>
+              }
+              { foodSearchType === 'favorite' && 
+                <div className='FoodListTitle'>
+                    VOS ALIMENTS FAVORIS
+                </div>
+              }
+              { foodSearchType === 'recent' && 
+                <div className='FoodListTitle'>
+                    VOS REPAS RECENT
+                </div>
+              }
+              <div className='FoodListContent'>
+                  <div className='FoodListCard'>
+                    <div className='CardInfos'>
+                      <div className='CardTitle'>
+                        Blanc de Poulet
+                      </div>
+                      <div className='CardCalorie'>
+                        Blablabla <span>200kcal</span>
+                      </div>
+                      <div className='CardQuantite'>
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • 100g
+                      </div>
+                    </div>
+                    <div className='deleteBtn'>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </div>
+                  </div>
+                  <div className='FoodListCard'>
+                    <div className='CardInfos'>
+                      <div className='CardTitle'>
+                        Blanc de Poulet
+                      </div>
+                      <div className='CardCalorie'>
+                        Blablabla <span>200kcal</span>
+                      </div>
+                      <div className='CardQuantite'>
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • 100g
+                      </div>
+                    </div>
+                    <div className='deleteBtn'>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </div>
+                  </div>
+                  <div className='FoodListCard'>
+                    <div className='CardInfos'>
+                      <div className='CardTitle'>
+                        Blanc de Poulet
+                      </div>
+                      <div className='CardCalorie'>
+                        Blablabla <span>200kcal</span>
+                      </div>
+                      <div className='CardQuantite'>
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • 100g
+                      </div>
+                    </div>
+                    <div className='deleteBtn'>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </div>
+                  </div>
+                  <div className='FoodListCard'>
+                    <div className='CardInfos'>
+                      <div className='CardTitle'>
+                        Blanc de Poulet
+                      </div>
+                      <div className='CardCalorie'>
+                        Blablabla <span>200kcal</span>
+                      </div>
+                      <div className='CardQuantite'>
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • 100g
+                      </div>
+                    </div>
+                    <div className='deleteBtn'>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </div>
+                  </div>
+              </div>
+            </div>
+          }
         </div>
       }
+      {
+        isSearchOn && GetFoodName
+      }
+      {
+        modalState[0] === true && <ModalAliment foodName='TEST' exitMethod={setModalState}/>
+      }
 
-
+     
     </div>
   );
 }

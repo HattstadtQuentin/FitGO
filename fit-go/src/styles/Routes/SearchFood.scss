@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     padding: 10% 2%;
+    margin-bottom: 75px;
 
     .back {
         position: absolute;
@@ -152,6 +153,76 @@
             }
         }
     }
-    
+
+    .FoodList {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .FoodListTitle {
+            font-family: $montserrat;
+            font-weight: 500;
+            font-size: 1rem;
+            color: $secondary-font--dark;
+        }
+    }
+
+    .FoodListContent {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .FoodListCard {
+            display: flex;
+            flex-direction: row;
+            background: $secondary--dark;
+            padding: 4%;
+            border-radius: 25px;
+            justify-content: space-between;
+            align-items: center;
+
+            .CardInfos {
+                display: flex;
+                flex-direction: column;
+
+                .CardTitle {
+                    font-size: 1rem;
+                    font-family: $titleFont;
+                    margin-bottom: 1px;
+                }
+
+                .CardCalorie {
+                    font-size: .9rem;
+                    font-family: $globalFont;
+                    margin-bottom: 7px;
+
+                    span {
+                        color: $primary-contrast--dark;
+                    }
+                }
+
+                .CardQuantite {
+                    font-size: .9rem;
+                    font-family: $globalFont;
+
+                    svg {
+                        font-size: .8rem;
+                        color:$secondary-font--dark;
+                    }
+                }
+            }
+
+            .deleteBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: $primary--dark;
+                color: $secondary-font--dark;
+                border-radius: 50px;
+                padding: 4%;
+                font-size: 1.2rem;
+            }
+        }
+    }
     
 }

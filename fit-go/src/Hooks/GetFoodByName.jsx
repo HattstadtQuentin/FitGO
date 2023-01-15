@@ -1,20 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faSpoon } from '@fortawesome/free-solid-svg-icons';
 
-export default function GetFoodByName(foodName) {
+export default function GetFoodByName({foodName, openModal}) {
     const [data, setData] = useState(null);
 
     function getRequest(foodName){
-        if(foodName.foodName === ''){
+        if(foodName === ''){
             return null
         }
         return {
             method: 'GET',
             url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
             params: {
-                query: foodName.foodName,
+                query: foodName,
                 offset: '0',
                 number: '10',
+                minCarbs: '10',
+                maxCarbs: '100',
+                minProtein: '10',
+                maxProtein: '100',
+                minCalories: '50',
+                maxCalories: '800',
+                minFat: '10',
+                maxFat: '100',
             },
             headers: {
                 'X-RapidAPI-Key': 'a49309afffmsh5e1ded6328b12bap12e906jsn679848e14fd8',
@@ -36,15 +46,27 @@ export default function GetFoodByName(foodName) {
     }, [options]);
 
     return (
-        <div className="card text-center m-3">
-            <div className="card-body">
-                {
-                    data != null && data.map((elem, i) => {     
-                        console.log("Entered");         
-                        return (<div key={i}>Food Data : {elem.id}</div>) 
-                     })
-                }
-            </div>
+        <div className="FoodListContent">
+            {
+                data != null && data.map((elem, i) => {       
+                    return (<div key={i} className='FoodListCard'>
+                    <div className='CardInfos'>
+                        <div className='CardTitle'>
+                        {elem.title}
+                        </div>
+                        <div className='CardCalorie'>
+                            <span>{Math.round(elem.nutrition.nutrients[0].amount)}kcal</span>
+                        </div>
+                        <div className='CardQuantite'>
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • {Math.round(elem.nutrition.nutrients[3].amount)}g gluc. • {Math.round(elem.nutrition.nutrients[1].amount)}g prot. • {Math.round(elem.nutrition.nutrients[1].amount)}g lip.
+                        </div>
+                    </div>
+                    <div className='deleteBtn' onClick={() => { openModal([true, elem])}}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
+                    </div>) 
+                    })
+            }
         </div>
     );
 }

@@ -6,11 +6,13 @@ import '../styles/Components/NavBar.scss';
 
 export default function NavBar() {
   return (
-    <div className="NavBar">
-        <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faHouse} /></NavLink>
-        <NavLink to="/program"><FontAwesomeIcon icon={faFireFlameCurved} /></NavLink>
-        <NavLink to="/calories"><FontAwesomeIcon icon={faBowlFood} /></NavLink>
-        <NavLink to="/settings"><FontAwesomeIcon icon={faUserGear} /></NavLink>
+    <div>
+      <div className="NavBar">
+          <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faHouse} /></NavLink>
+          <NavLink to="/program"><FontAwesomeIcon icon={faFireFlameCurved} /></NavLink>
+          <NavLink to="/calories"><FontAwesomeIcon icon={faBowlFood} /></NavLink>
+      </div>
+      <div className='blackFade'>&nbsp;</div>
     </div>
   );
 }

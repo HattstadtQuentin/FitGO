@@ -3,19 +3,30 @@
     font-family: 'greycliff';
     src: url('./Fonts/greycliff.otf') format('opentype');
 }
+@font-face {
+    font-family: 'Silka';
+    src: url('./Fonts/Silka.otf') format('opentype');
+}
 
 $titleFont: 'greycliff';
 $globalFont: 'inter';
 $montserrat:'Montserrat';
+$silka: 'Silka';
 
 $primary--dark: #09050D;
 $secondary--dark: #191C1B;
 $third--dark : #272A29;
 
 $primary-contrast--dark: #01D7C0;
+$secondary-contrast--dark: #6562FC;
 
 $secondary-font--dark: #8b8f8e;
 
 $chart-color-one: #01E8D1;
 $chart-color-two: #917FFC;
 $chart-color-three: #ef476f;
+
+
+$primary-modal-color--dark: #3D3C40;
+$secondary-modal-color--dark: #313033;
+$third-modal-color--dark: #4D4B52;
