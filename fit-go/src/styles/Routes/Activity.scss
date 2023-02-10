@@ -1,0 +1,314 @@
+@import "../Global.scss";
+
+.Activity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4% 2%;
+
+    .title {
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+        text-align: center;
+        font-size: 1.8rem;
+        font-family: $titleFont;
+        line-height: 0.9;
+    }
+
+    .pagination {
+        height: 4vh;
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+        gap: 2vh;
+        border-radius: 50px;
+        margin-bottom: 15px;
+        background: $secondary--dark;
+
+
+        .circle {
+            height: 2vh;
+            width: 2vh;
+            border-radius: 50%;
+            background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+
+
+        }
+
+        .active {
+            background: $primary-contrast--dark !important;
+        }
+
+    }
+
+    .swiper {
+        width: 100%;
+        height: 60vh;
+        overflow:visible;
+
+
+
+        .musculation {
+            overflow:visible;
+            font-family: $globalFont;
+            font-weight: 700;
+            font-size: 2rem;
+
+            .top {
+                height: 30%;
+                width: 100%;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                border-radius: 25px;
+                backdrop-filter: blur(20px);
+
+                .titleTop {
+                    padding-top: 5%;
+                    text-align: center;
+
+                    .additionalInfos {
+                        text-align: center;
+                        font-weight: 700;
+                        font-size: 1rem;
+                        color: $secondary-font--dark
+                    }
+                }
+
+                .imgContainer {
+                    width:30%;
+                    max-height: 60%;
+                    border-radius: 50%;
+                    position: absolute;
+                    background-color: $primary--dark;
+                    bottom: -40%;
+                    z-index: 2;
+                    padding: 3%;
+                    right: calc(33.5% - 10px );
+
+                    
+                    img {
+                        width: calc(96% - 5px);
+                        border-radius: 50%;
+                        border: 5px solid $primary-contrast--dark;
+                    }
+                }
+                
+
+            }
+
+            .bottom {
+                margin-top: 22%;
+                height: 70%;
+                width: 100%;
+
+                .trier {
+                    position: relative;
+                    height: 10%;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    font-family: $poppins;
+                    
+                    .titleTrier {
+                        font-size: 1rem;
+                    }
+
+                    select {
+                        margin-left: 10px;
+                        font-family: $poppins;
+                        border: none;
+                        border-radius: 25px;
+                        padding: 2% 5%;
+                        background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                        color: white;
+                    }
+
+                    option {
+                        background-color: $secondary--dark;
+                        font-family: $poppins;
+                        border: none;
+                        outline: none;
+                      }
+                      
+                      option:hover {
+                        background-color: $secondary--dark;
+                      }
+
+                    .trash {
+                        position: absolute;
+                        height: 60%;
+                        right: 0;
+                        top: 20%;
+
+                        &:hover {
+                            color: $chart-color-three;
+                        }
+                    }
+                }
+
+                .seanceList {
+                    display: flex;
+                    flex-direction: column;
+                    border-radius: 10px;
+
+                    .seanceCard {
+                        height: 25%;
+                        width: 100%;
+                        background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                        border-radius: 10px;
+                        margin-bottom: 15px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        img {
+                            width: 25%;
+                            height: 100%;
+                            border-top-left-radius: 10px;
+                            border-bottom-left-radius: 10px;
+                        }
+
+                        .seanceInfos {
+                            width: 70%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            font-family: $poppins;
+                            .titleSeance {
+                                font-size: 1rem;
+                            }
+                            .desc {
+                                font-size: .8rem;
+                                color: $secondary-font--dark;
+                            }
+                            
+                        }
+                    }
+
+                    .hide {
+                        display: none;
+                    }
+                }
+            }
+
+            .bottomRunning {
+                margin-top: 25%;
+                height: 70%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+
+                .timerInputContainer {
+                    width: 100%;
+                    height: 65%;
+
+                    .titleTimer {
+                        width: 100%;
+                        text-align: center;
+                        font-size: 1.5rem;
+                        font-weight: 600;
+                        font-family: $silka;
+                    }
+
+                    .durationChoose {
+                        height: 80%;
+                        
+                        margin-top: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        align-items: center;
+                        justify-content: space-around;
+
+                        
+                        .durationCard {
+                            display: flex;
+                            flex-direction: row;
+                            height: 30%;
+                            padding: 2%;
+                            width: 100%;
+                            align-items: center;
+                            justify-content: center;
+                            
+                            font-size: 1.4rem;
+                            
+                            font-family: $poppins;
+
+                            input {
+                                
+                                width: 40%;
+                                border: none;
+                                border-radius: 25px;
+                                height: 50%;
+                                font-family: $poppins;
+                                color: white;
+                                padding: 2% 12% 2% 2%;
+                                text-align: right;
+                                font-size: 1.4rem;
+                                margin-right: 5px !important;
+                                background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                            }
+
+                            input[type=number] { 
+                                -moz-appearance: textfield;
+                                appearance: textfield;
+                                margin: 0; 
+                            }
+
+                            textarea:focus, input:focus{
+                                outline: 2px solid $primary-contrast--dark;
+                            }
+
+                            p {
+                                margin-left: -35px;
+                            }
+
+                            input[type=number]::-webkit-inner-spin-button,
+                            input[type=number]::-webkit-outer-spin-button { 
+                                -webkit-appearance: none; 
+                                margin: 0; 
+                            }
+                        }
+                    }
+                }
+
+
+                button {
+                    position: absolute;
+                    bottom: 10%;
+                    border: none;
+                    outline: none;
+                    border-radius: 25px;
+                    color: white;
+                    background-color: $primary-contrast--dark;
+                    font-size: 2rem;
+                    font-family: $montserrat;
+                    font-weight: 700;
+                    width: 60%;
+                    padding: 2%;
+                }
+
+                .notReady {
+                    background-color: $secondary--dark;
+                }
+            }
+        }
+    }
+
+
+
+   
+}
