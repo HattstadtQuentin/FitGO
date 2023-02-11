@@ -1,0 +1,131 @@
+@import "../Global.scss";
+
+.workoutContainer {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 20vh;
+    margin-bottom: 10px;
+    background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+    padding: 5%;
+    border-radius: 25px;
+    .nextWorkoutTitle {
+        height: 10%;
+        margin-bottom: 10px;
+        
+        font-family: $poppins;
+    }
+
+    .content {
+        height: calc(90% - 10px);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 65%;
+            height: 100%;
+
+            img {
+                height: 70%;
+                border-radius: 10px;
+            }
+
+            .btnContainer {
+                height: 30%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-around;
+
+                button {
+                    font-family: $poppins;
+                    color: $primary--dark;
+                    background: $primary-contrast--dark;
+                    border: none;
+                    outline: none;
+                    border-radius: 25px;
+                    width: 45%;
+                    height: 60%;
+                }
+
+                .edition {
+                    background-color: $secondary--dark;
+                    color: white;
+                }
+            }
+        }
+
+        .right {
+            font-family: $silka;
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .infoCard {
+                font-size: 0.9rem;
+                color: $secondary-font--dark;
+                .title {
+                    font-family: $poppins;
+                    color: white;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .seeLess {
+        position: absolute;
+        right: 5%;
+    }
+}
+
+.seanceCard {
+    height: 10%;
+    width: 100%;
+    background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    img {
+        width: 25%;
+        height: 100%;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .seanceInfos {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: $poppins;
+        .titleSeance {
+            font-size: 1rem;
+        }
+        .desc {
+            font-size: .8rem;
+            color: $secondary-font--dark;
+        }
+        
+    }
+
+    .seeMore {
+        position: absolute;
+        right: 5%;
+    }
+}
+
+.hide {
+    display: none;
+}

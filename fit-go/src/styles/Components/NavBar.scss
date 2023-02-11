@@ -14,7 +14,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    z-index: 2;
+    z-index: 10;
 
     a {
         text-decoration: none;
@@ -25,7 +25,7 @@
     .play {
         font-size: 3rem !important;
         background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFFFFF 100%);
-    backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
         height: 150%;
         align-items: center;
         justify-content: center;
@@ -35,6 +35,11 @@
         
         margin: 0 -5%;
         border-radius: 50px;
+
+        img {
+            width: 80%;
+            margin-left: -5px;
+        }
     }
         
     .active {

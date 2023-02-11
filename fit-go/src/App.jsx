@@ -10,6 +10,7 @@ import SearchFood from "./Routes/SearchFood.jsx";
 import Calories from "./Routes/Calories.jsx";
 import Home from "./Routes/Home";
 import Activity from "./Routes/Activity";
+import ProgramCreator from "./Routes/ProgramCreator";
 
 
 export default function App(){
@@ -19,6 +20,7 @@ export default function App(){
       <Routes>
         <Route exact path="/home" element={<Home/>}/>
         <Route exact path="/activity" element={<Activity/>}/>
+        <Route exact path="/program" element={<ProgramCreator/>}/>
         <Route exact path="/calories" element={<Calories/>}/>
         <Route path="/calories/food/:menu" element={<SearchFood />} />
       </Routes>

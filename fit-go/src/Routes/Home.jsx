@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../styles/Routes/Home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsis, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsis, faDumbbell, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -111,7 +111,7 @@ export default function Home() {
     for (var i = 0; i <((firstOfMonth.getDay()-8)%7)*-1;i++) {
         divJours.push(
             <motion.div
-                key={i+10}
+                key={i+50}
                 variants={item}
                 className={`planningCardPlaceholder`}
             >
@@ -119,6 +119,12 @@ export default function Home() {
             </motion.div>
         );
     }
+
+    const [isModalActive, setIsModalActive] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+    const [isConnecting, setIsConnecting] = useState(true);
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
 
     return (
         <div className="Home">
@@ -128,18 +134,43 @@ export default function Home() {
                     </div>
                     <FontAwesomeIcon icon={faBell} />
             </div>
-            <div className='personBar'>
-                    <img src="https://thispersondoesnotexist.com/image"/>
-                    <div className='infos'>
-                        <div className='top'>
-                            <div className='name'>Hattstadt Quentin</div>
-                            <FontAwesomeIcon icon={faEllipsis} />
+            { isLogin &&
+                <div className='personBar'>
+                    
+                        <img src="https://thispersondoesnotexist.com/image"/>
+                        <div className='infos'>
+                            <div className='top'>
+                                <div className='name'>Hattstadt Quentin</div>
+                                <FontAwesomeIcon icon={faEllipsis} />
+                            </div>
+                            <div className='bottom'>
+                                <FontAwesomeIcon icon={faDumbbell} /> Scéance Pec • Hier
+                            </div>
                         </div>
-                        <div className='bottom'>
-                            <FontAwesomeIcon icon={faDumbbell} /> Scéance Pec • Hier
+                    
+                </div>
+            }
+            { !isLogin &&
+                <div className='personBar'>
+                    
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => setIsModalActive(true)}
+                        >
+                                <FontAwesomeIcon icon={faRightToBracket} />
+                        </motion.button>
+                        <div className='infos'>
+                            <div className='top'>
+                                <div className='name'>Connecter vous</div>
+                            </div>
+                            <div className='bottom'>
+                                Pour sauvegarder vos données
+                            </div>
                         </div>
-                    </div>
-            </div>
+                    
+                </div>
+            }
             <div className='nextWorkoutContainer'>
                     <div className='nextWorkoutTitle'>
                         Prochaine Scéance
@@ -184,6 +215,91 @@ export default function Home() {
                         {divJours}
                     </motion.div>
             </div>
+            {isModalActive &&
+                <div className='modalBackground' onClick={() => setIsModalActive(false)}>
+                    <div className='modalCreate' onClick={(e) =>  e.stopPropagation()}>
+                    { !isLogin && isConnecting &&
+                        <div className='login'>
+                            <div className='titleLogin'>
+                                Se connecter
+                            </div>
+                            <div className='contentLogin'>
+                                <div class='inputWrapper'>
+                                    <div className='inputContainer'>
+                                        <input value={loginEmail} type="text" placeholder='Email' onChange={e => setLoginEmail(e.target.value)}/>
+                                    </div>
+                                    <div className='inputContainer'>
+                                        <input value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
+                                    </div>
+                                </div>
+                                <div className='subtitle'>Vous n'avez pas de compte ? <motion.p whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => setIsConnecting(false)}>S'incrire</motion.p></div>
+                                <div className='btnContainer'>
+                                    <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={null}
+                                    >
+                                            Connection
+                                    </motion.button>
+                                </div>
+                        </div>
+                    </div>
+                    }
+                    { !isLogin && !isConnecting &&
+                        <div className='login'>
+                            <div className='titleLogin'>
+                                S'incrire
+                            </div>
+                            <div className='contentLogin'>
+                                <div class='inputWrapper'>
+                                    <div className='inputContainer'>
+                                        <input value={loginEmail} type="text" placeholder='Email' onChange={e => setLoginEmail(e.target.value)}/>
+                                    </div>
+                                    <div className='inputContainer'>
+                                        <input value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
+                                    </div>
+                                </div>
+                                <div className='subtitle'>Vous avez déjà un compte ? <motion.p whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => setIsConnecting(true)}>Connexion</motion.p></div>
+                                <div className='btnContainer'>
+                                    <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={null}
+                                    >
+                                            S'inscrire
+                                    </motion.button>
+                                </div>
+                        </div>
+                    </div>
+                    }
+                    { isLogin &&
+                        <div className='personBar'>
+                            
+                                <motion.button
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    onClick={() => setIsModalActive(true)}
+                                >
+                                        <FontAwesomeIcon icon={faRightToBracket} />
+                                </motion.button>
+                                <div className='infos'>
+                                    <div className='top'>
+                                        <div className='name'>Connecter vous</div>
+                                    </div>
+                                    <div className='bottom'>
+                                        Pour sauvegarder vos données
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    }
+                    </div>
+                </div>        
+            }
         </div>
     );
 }
