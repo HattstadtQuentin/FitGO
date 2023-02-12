@@ -2,6 +2,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSpoon } from '@fortawesome/free-solid-svg-icons';
+import translate from "translate";
+import { motion } from "framer-motion";
+
+translate.engine = "deepl";
+translate.key = "1fa8e4f5-5dc6-492e-276b-3b7d9118994e:fx";
+
 
 export default function GetFoodByName({foodName, openModal}) {
     const [data, setData] = useState(null);
@@ -58,12 +64,14 @@ export default function GetFoodByName({foodName, openModal}) {
                             <span>{Math.round(elem.nutrition.nutrients[0].amount)}kcal</span>
                         </div>
                         <div className='CardQuantite'>
-                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • {Math.round(elem.nutrition.nutrients[3].amount)}g gluc. • {Math.round(elem.nutrition.nutrients[1].amount)}g prot. • {Math.round(elem.nutrition.nutrients[1].amount)}g lip.
+                        <FontAwesomeIcon className="searchIcon" icon={faSpoon} /> • {Math.round(elem.nutrition.nutrients[3].amount)}g gluc. • {Math.round(elem.nutrition.nutrients[2].amount)}g prot. • {Math.round(elem.nutrition.nutrients[1].amount)}g lip.
                         </div>
                     </div>
-                    <div className='deleteBtn' onClick={() => { openModal([true, elem])}}>
+                    <motion.div whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }} 
+                            className='deleteBtn' onClick={() => { openModal([true, elem])}}>
                         <FontAwesomeIcon icon={faPlus} />
-                    </div>
+                    </motion.div>
                     </div>) 
                     })
             }

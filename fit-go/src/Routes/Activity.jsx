@@ -15,14 +15,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { getWorkouts } from '../Functions/HandlingWorkout';
 import ImageWorkoutType from '../Components/ImageWorkoutType';
 import TimeConvertor from '../Functions/TimeConvertor'; 
+import StartedActivity from '../Components/StartedActivity';
 
 import 'swiper/scss';
 import 'swiper/scss/scrollbar';
 
 export default function Activity() {
+    const [startedActivity, setStartedActivity] = useState(null);
     const [swiperInfos, setSwiperInfos] = useState(null);
     const [indexActivity, setIndexActivity] = useState(0);
     const [timer, setTimer] = useState( 0, 0, 0 );
+    const [isRunning, setIsRunning] = useState(false);
+    const [time, setTime] = useState(0);
 
     const [workouts, setWorkouts] = useState(null);
 
@@ -57,16 +61,28 @@ export default function Activity() {
 
     const [isGoodTimer, setIsGoodTimer] = useState(false);
 
-    const onChangeTimer = (hours, minutes, seconds) => {
-        setTimer({ hours, minutes, seconds });
-        if(hours === 0 && minutes === 0 && seconds === 0) {
+    
+    const hourRef = useRef();
+    const minuteRef = useRef();
+    const secondRef = useRef();
+
+    const onChangeTimer = () => {
+        if(hourRef.current.value === '' && minuteRef.current.value === '' && secondRef.current.value === '') {
             setIsGoodTimer(false);
         } else {
+            var tmp = (hourRef.current.value !== '' ? parseInt(hourRef.current.value  , 10 )*3600 : 0) + (minuteRef.current.value  !== '' ? parseInt(minuteRef.current.value , 10 )*60 : 0) + (secondRef.current.value !== '' ? parseInt(secondRef.current.value , 10 ) * 1 : 0);
+            setTime(tmp);
             setIsGoodTimer(true);
         }
       };
 
-    
+    const handleStartRunning = () => {
+        if(isGoodTimer )
+         {
+            setIsRunning(true); 
+            setStartedActivity(0); 
+        }
+    }
 
     return (
         <div className="Activity">
@@ -116,12 +132,12 @@ export default function Activity() {
                         </div>
                         <Scrollbars className="seanceList" style={{ height: "90%" }}>
                             {workouts !== null && workouts.map((workout, key) => {
-                                console.log(workout);
                                 return (
                                     <motion.div
                                     key={key}
                                     whileTap={{ scale: 0.9 }}
                                     className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'chest') ? 'hide' : '')}
+                                    onClick={() => setStartedActivity(workout.idProgramme)}
                                     >
                                         <ImageWorkoutType type={workout.type} />
                                         <div className='seanceInfos'>
@@ -153,28 +169,31 @@ export default function Activity() {
                             </div>
                             <div className='durationChoose'>
                                 <div className='durationCard'>
-                                    <input type="number" placeholder='0' onChange={e => onChangeTimer(e.target.value, timer[1], timer[2])}/>
+                                    <input ref={hourRef} type="number" placeholder='0' onChange={e => onChangeTimer()}/>
                                     <p>h</p>
                                 </div>
                                 <div className='durationCard'>
-                                    <input type="number" placeholder='0' onChange={e => onChangeTimer(timer[0], e.target.value, timer[2])}/>
+                                    <input ref={minuteRef} type="number" placeholder='0' onChange={e => onChangeTimer()}/>
                                     <p>m</p>
                                 </div>
                                 <div className='durationCard'>
-                                    <input type="number" placeholder='0' onChange={e => onChangeTimer(timer[0], timer[1], e.target.value)}/>
+                                    <input ref={secondRef} type="number" placeholder='0' onChange={e => onChangeTimer()}/>
                                     <p>s</p>
                                 </div>
                             </div>
                         </div>
                         <motion.button className={!isGoodTimer ? 'notReady' : ''}
                             whileHover={timer === null ? '': { scale: 1.1 }}
-                            whileTap={timer === null ? '' : { scale: 0.9 }}>
+                            whileTap={timer === null ? '' : { scale: 0.9 }}
+                            onClick={handleStartRunning}>
                                 Go !
                         </motion.button>
                     </div>
                 </SwiperSlide>
             </Swiper>
-
+            {
+                startedActivity !== null && <StartedActivity idProgramme={startedActivity} quit={setStartedActivity} running={isRunning} time={time} setRunning={setIsRunning}/>
+            }                    
         </div>
     );
 }

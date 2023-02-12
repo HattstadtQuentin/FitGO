@@ -1,0 +1,119 @@
+@import "../Global.scss";
+
+.foodCard {
+    width: 90%;
+    background: $secondary--dark;
+    border-radius: 25px;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    .topContainer {
+        width: 100%;
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        .primaryIcon {
+            font-size: 2rem;
+        }
+    
+        .informationsContainer {
+            margin-left: -15%;
+            display: flex;
+            flex-direction: column;
+            height: 90%;
+            justify-content: space-around;
+    
+            .title {
+                font-family: $montserrat;
+                font-weight: 500;
+                font-size: 1rem;
+                margin-bottom: 5px;
+            }
+            .description {
+                font-family: $globalFont;
+                font-size: 0.8rem;
+            }
+        }
+    
+        .plusBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: $primary--dark;
+            color: $secondary-font--dark;
+            border-radius: 50px;
+            width: 8vw;
+            height: 8vw;
+            font-size: 1.5rem;
+        }
+    }
+
+    .FoodListCard {
+        display: flex;
+        flex-direction: row;
+        background: $third--dark;
+        padding: 2% 5%;
+        width: 90%;
+        border-radius: 25px;
+        justify-content: space-between;
+        align-items: center;
+
+        .CardInfos {
+            display: flex;
+            flex-direction: column;
+
+            .CardTitle {
+                font-size: 1rem;
+                font-family: $titleFont;
+                margin-bottom: 1px;
+            }
+
+            .CardCalorie {
+                font-size: .9rem;
+                font-family: $globalFont;
+                margin-bottom: 7px;
+
+                span {
+                    color: $primary-contrast--dark;
+                }
+            }
+
+            .CardQuantite {
+                font-size: .9rem;
+                font-family: $globalFont;
+
+                svg {
+                    font-size: .8rem;
+                    color:$secondary-font--dark;
+                }
+            }
+        }
+
+        .deleteBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: $primary--dark;
+            color: $secondary-font--dark;
+            border-radius: 50px;
+            padding: 4%;
+            font-size: 1.2rem;
+        }
+    }
+
+    .addingMore {
+        text-align: center;
+        padding: 3% 10%;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        background: $primary-contrast--dark;
+        color: black;
+        font-family: $poppins;
+    }
+
+    
+}

@@ -13,13 +13,10 @@ import { hashSync, compareSync, getRounds  } from "bcrypt-ts";
 
 export default function Home() {
     const setUserPersistant = useUserStore((state) => state.setUser);
-    const User = (id, email) => { return { id: id, email: email } }
-    const [user, setUser] = useState(User(useUserStore((state) => state.id), useUserStore((state) => state.email)));
-
+    const userName = useUserStore((state) => state.email);
+    
     const handleUpdateUser = (id, email) => {
         setUserPersistant(id, email);
-        setUser(User(id, email));
-        console.log("updated");
     }
 
 
@@ -145,7 +142,6 @@ export default function Home() {
                         theme: 'dark',
                     });
                 } else {
-                    console.log(getRounds(res.mdp));
                     if(compareSync(mdp, res.mdp))
                     {   
                         handleUpdateUser(res.idUser, email);
@@ -269,7 +265,7 @@ export default function Home() {
                         <img src="https://thispersondoesnotexist.com/image"/>
                         <div className='infos'>
                             <div className='top'>
-                                <div className='name'>{user.email}</div>
+                                <div className='name'>{userName}</div>
                                 <motion.button
                                     className='settingsBtn'
                                     whileHover={{ scale: 1.1 }}

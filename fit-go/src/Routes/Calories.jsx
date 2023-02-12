@@ -1,14 +1,100 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import '../styles/Routes/Calories.scss';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faPlus, faMugSaucer, faBurger, faHotdog, faAppleWhole } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
+import Repas from '../Components/Repas';
+import useUserStore from '../Stores/useUserStore';
+
+import { toast } from 'react-toastify';
+
+
+
+import { getRepasByDate } from '../Functions/HandlingCaloriesJsx';
 
 
 export default function Calories() {
+    const userId = useUserStore((state) => state.id);
+
     ChartJS.register(ArcElement, Tooltip, Legend);
+
+    const[date, setDate] = useState(new Date());
+
+    const[breakfast, setBreakfast] = useState(null);
+    const[dinner, setDinner] = useState(null);
+    const[lunch, setLunch] = useState(null);
+    const[snack, setSnack] = useState(null);
+
+
+    const [totalCal, setTotalCal] = useState(0);
+    const [totalGlu, setTotalGlu] = useState(0);
+    const [totalProt, setTotalProt] = useState(0);
+    const [totalLip, setTotalLip] = useState(0);
+    const [totalCalMAT, setTotalCalMAT] = useState(0);
+    const [totalGluMAT, setTotalGluMAT] = useState(0);
+    const [totalProtMAT, setTotalProtMAT] = useState(0);
+    const [totalLipMAT, setTotalLipMAT] = useState(0);
+    const [totalCalMID, setTotalCalMID] = useState(0);
+    const [totalGluMID, setTotalGluMID] = useState(0);
+    const [totalProtMID, setTotalProtMID] = useState(0);
+    const [totalLipMID, setTotalLipMID] = useState(0);
+    const [totalCalSOIR, setTotalCalSOIR] = useState(0);
+    const [totalGluSOIR, setTotalGluSOIR] = useState(0);
+    const [totalProtSOIR, setTotalProtSOIR] = useState(0);
+    const [totalLipSOIR, setTotalLipSOIR] = useState(0);
+    const [totalCalSNA, setTotalCalSNA] = useState(0);
+    const [totalGluSNA, setTotalGluSNA] = useState(0);
+    const [totalProtSNA, setTotalProtSNA] = useState(0);
+    const [totalLipSNA, setTotalLipSNA] = useState(0);
+
+
+    useEffect(() => {
+        var tmpGLU = totalGluMAT + totalGluMID + totalGluSOIR + totalGluSNA;
+        var tmpProt = totalProtMAT + totalProtMID + totalProtSOIR + totalProtSNA;
+        var tmpLip = totalLipMAT + totalLipMID + totalLipSOIR + totalLipSNA;
+        setTotalCal(totalCalMAT + totalCalMID + totalCalSOIR + totalCalSNA);
+        setTotalGlu(totalGluMAT + totalGluMID + totalGluSOIR + totalGluSNA);
+        setTotalProt(totalProtMAT + totalProtMID + totalProtSOIR + totalProtSNA);
+        setTotalLip(totalLipMAT + totalLipMID + totalLipSOIR + totalLipSNA);
+    }, [totalCalMAT, totalGluMAT, totalProtMAT, totalLipMAT, totalCalMID, totalGluMID, totalProtMID, totalLipMID, totalCalSOIR, totalGluSOIR, totalProtSOIR, totalLipSOIR, totalCalSNA, totalGluSNA,totalProtSNA, totalLipSNA ])
+
+
+    useEffect(() => {
+        if(userId === null){
+            toast.error("Vous devez être connecté pour acceder à cette fonctionnalité", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
+        } else {
+        getRepasByDate(new Date(date).toISOString(), userId).then((res) => {
+            res.forEach(resu => {
+                switch(resu.type) {
+                    case "MATIN":
+                        setBreakfast(resu);
+                        break;
+                    case "MIDI":
+                        setLunch(resu);
+                        break;
+                    case "SOIR":
+                        setDinner(resu);
+                        break;
+                    case "COLLATION":
+                        setSnack(resu);
+                        break;
+                }
+            });
+        })
+    }
+    },[date]);
 
     const data = {
         datasets: [
@@ -31,36 +117,12 @@ export default function Calories() {
                 <div className="title">
                     Calories
                 </div>
-                {/* <details className="custom-select">
-                    <summary className="radios">
-                        <input type="radio" name="item" id="default" title="24 Heures" checked/>
-                        <input type="radio" name="item" id="item1" title="7 jours"/>
-                        <input type="radio" name="item" id="item2" title="1 mois"/>
-                    </summary>
-                    <ul className="list">
-                        <li>
-                            <label htmlFor="default">
-                                24 Heures
-                            </label>
-                        </li>
-                        <li>
-                            <label htmlFor="item1">
-                                7 jours
-                            </label>
-                        </li>
-                        <li>
-                            <label htmlFor="item2">
-                                1 mois
-                            </label>
-                        </li>
-                    </ul>
-                </details> */}
             </div>
             <div className="StatsContainer">
                 <div className='StatsGlobal'>
                     <div className='StatsCard'>
                         <div className='CardContent'>
-                            0
+                            {totalCal}
                         </div>
                         <div className='CardTitle'>
                             Consommées
@@ -76,7 +138,7 @@ export default function Calories() {
                     </div>
                     <div className='StatsCard'>
                         <div className='CardContent'>
-                            0
+                            ? :(
                         </div>
                         <div className='CardTitle'>
                             Brûlées
@@ -134,75 +196,24 @@ export default function Calories() {
                     </div>
                 </div>
             </div>
-            <div className='daySelector'>
-                <FontAwesomeIcon icon={faCalendarDays} />
-                Aujourd'hui, 14 JANV.
+            <div className='daySelector'>             
+                <motion.div whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }} 
+                            onClick={() => {var tmpDate = new Date(date).setDate(new Date(date).getDate() - 1); setDate(tmpDate)}}className="left"><FontAwesomeIcon icon={faAngleLeft} /></motion.div>
+                <div className="center">
+                    <FontAwesomeIcon icon={faCalendarDays} />
+                    {new Date(date).toLocaleDateString("fr")}
+                </div>
+                <motion.div whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }} 
+                            onClick={() => {var tmpDate = new Date(date).setDate(new Date(date).getDate() + 1); setDate(tmpDate)}} className="right"><FontAwesomeIcon icon={faAngleRight}/></motion.div>
+                
             </div>
             <div className='FoodContainer'>
-                <NavLink to = "food/breakfast">
-                <div className='petitDejContainer foodCard'>
-                    <FontAwesomeIcon className="primaryIcon" icon={faMugSaucer} />
-                    <div className='informationsContainer'>
-                        <div className='title'>
-                            Petit dejeuner
-                        </div>
-                        <div className='description'>
-                            Recommandés: 500 kcal
-                        </div>
-                    </div>
-                    <div className='plusBtn'>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </div>
-                </div>
-                </NavLink>
-                <NavLink to = "food/lunch">
-                <div className='dejeunerContaier foodCard'>
-                    <FontAwesomeIcon className="primaryIcon" icon={faBurger} />
-                    <div className='informationsContainer'>
-                        <div className='title'>
-                            Dejeuner
-                        </div>
-                        <div className='description'>
-                            Recommandés: 1500 kcal
-                        </div>
-                    </div>
-                    <div className='plusBtn'>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </div>
-                </div>
-                </NavLink>
-                <NavLink to = "food/dinner">
-                <div className='dinerContainer foodCard'>
-                    <FontAwesomeIcon className="primaryIcon" icon={faHotdog} />
-                    <div className='informationsContainer'>
-                        <div className='title'>
-                            Diner
-                        </div>
-                        <div className='description'>
-                            Recommandés: 900 kcal
-                        </div>
-                    </div>
-                    <div className='plusBtn'>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </div>
-                </div>
-                </NavLink>
-                <NavLink to = "food/snack">
-                <div className='snackContainer foodCard'>
-                    <FontAwesomeIcon className="primaryIcon" icon={faAppleWhole} />
-                    <div className='informationsContainer'>
-                    <div className='title'>
-                            Snack
-                        </div>
-                        <div className='description'>
-                            Recommandés: 200 kcal
-                        </div>
-                    </div>
-                    <div className='plusBtn'>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </div>
-                </div>
-                </NavLink>
+                <Repas repas={breakfast} type="breakfast" date={new Date(date)} setTotalCal={setTotalCalMAT} setTotalGlu={setTotalGluMAT} setTotalProt={setTotalProtMAT} setTotalLip={setTotalLipMAT}/>
+                <Repas repas={lunch} type="lunch" date={new Date(date)} setTotalCal={setTotalCalMID} setTotalGlu={setTotalGluMID} setTotalProt={setTotalProtMID} setTotalLip={setTotalLipMID}/>
+                <Repas repas={dinner} type="dinner" date={new Date(date)} setTotalCal={setTotalCalSOIR} setTotalGlu={setTotalGluSOIR} setTotalProt={setTotalProtSOIR} setTotalLip={setTotalLipSOIR}/>
+                <Repas repas={snack} type="snack" date={new Date(date)} setTotalCal={setTotalCalSNA} setTotalGlu={setTotalGluSNA} setTotalProt={setTotalProtSNA} setTotalLip={setTotalLipSNA}/>
             </div>
         </div>
     );
