@@ -1,0 +1,234 @@
+@import "../Global.scss";
+
+.searchFoodContainer {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    padding: 10% 2%;
+    margin-bottom: 75px;
+
+    .back {
+        position: absolute;
+        width: 5vw;
+        height: 5vw;
+        margin-top: 8px;
+        z-index: 2;
+    }
+
+    .header {
+        width: 70%;
+        font-family: $titleFont;
+        display: flex;
+        color: white;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+        margin-left: 20px;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            float: right;
+            width: .6rem;
+            height: .6rem;
+            border-bottom: 2px solid currentColor;
+            border-left: 2px solid currentColor;
+            border-bottom-left-radius: 2px;
+            transform: rotate(45deg) translate(-10px, 10px);
+            transform-origin: center center;
+            transition: transform ease-in-out 100ms;
+            cursor: pointer;
+        }
+    }
+
+
+    .searchFoodContent {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        align-items: center;
+        color: $secondary-font--dark;
+        margin-bottom: 20px;
+        gap: 10px;
+
+
+        .searchFood {
+            width: 100%;
+            font-family: $globalFont;
+            border-radius: 25px;
+            border: none;
+            background-color: $third--dark;
+            padding: 3.5% 5% 3.5% 5%;
+            color: $secondary-font--dark;
+            transition-delay: 2s;
+            transition-timing-function: ease;
+            &:focus {
+                border:none;
+                outline: none;
+            }
+        }
+
+        button {
+            height: 100%;
+            padding: 2%;
+            width: 20%;
+            border: none;
+            outline: none;
+            background-color: $primary-contrast--dark;
+            border-radius: 25px;
+        }
+    }
+
+    .InformationsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .ApportContainer {
+            width: 90%;
+            background-color: $secondary--dark;
+            border-radius: 25px;
+            padding: 5%;
+    
+            .ApportTitle {
+    
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 20px;
+    
+                .text {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    font-family: $globalFont;
+                    font-weight: 600;
+                    font-size: .9rem;
+                    
+                    span {
+                        font-size: .8rem;
+                        font-weight: 400;
+                    }
+                }
+    
+            }
+    
+            .ApportContent {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+    
+                .ApportCard {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    font-family: $globalFont;
+                    font-size: .8rem;
+                }
+            }
+        }
+
+        .selectTypeInfos {
+            width: 100%;
+            background-color: $secondary--dark;
+            border-radius: 25px;
+            display: flex;
+            flex-direction: row;
+
+
+
+            .selectTypeInfosCard {
+                width: 50%;
+                text-align: center;
+                padding: 5%;
+                border-radius: 25px;
+
+                
+            }
+            .active {
+                background-color: $third--dark;
+                svg {
+                    color: $primary-contrast--dark;
+                }
+            }
+        }
+    }
+
+    .FoodList {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .FoodListTitle {
+            font-family: $montserrat;
+            font-weight: 500;
+            font-size: 1rem;
+            color: $secondary-font--dark;
+        }
+    }
+
+    .FoodListContent {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .FoodListCard {
+            display: flex;
+            flex-direction: row;
+            background: $secondary--dark;
+            padding: 4%;
+            border-radius: 25px;
+            justify-content: space-between;
+            align-items: center;
+
+            .CardInfos {
+                display: flex;
+                flex-direction: column;
+
+                .CardTitle {
+                    font-size: 1rem;
+                    font-family: $titleFont;
+                    margin-bottom: 1px;
+                }
+
+                .CardCalorie {
+                    font-size: .9rem;
+                    font-family: $globalFont;
+                    margin-bottom: 7px;
+
+                    span {
+                        color: $primary-contrast--dark;
+                    }
+                }
+
+                .CardQuantite {
+                    font-size: .9rem;
+                    font-family: $globalFont;
+
+                    svg {
+                        font-size: .8rem;
+                        color:$secondary-font--dark;
+                    }
+                }
+            }
+
+            .deleteBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: $primary--dark;
+                color: $secondary-font--dark;
+                border-radius: 50px;
+                padding: 4%;
+                font-size: 1.2rem;
+            }
+        }
+    }
+    
+}

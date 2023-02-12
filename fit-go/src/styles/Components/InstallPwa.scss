@@ -1,0 +1,12 @@
+
+@import "../Global.scss";
+
+#setup_button {
+    padding: 2% 10%;
+    font-family: $poppins;
+    color: $primary--dark;
+    background: $primary-contrast--dark;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+}

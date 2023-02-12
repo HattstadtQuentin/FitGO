@@ -1,0 +1,58 @@
+@import "../Global.scss";
+
+.NavBar {
+    position: fixed;
+    bottom: 3%;
+    width: 80%;
+    height: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFFFFF 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 10;
+
+    a {
+        text-decoration: none;
+        color: grey;
+        font-size: 1.7rem;
+    }
+
+    .play {
+        font-size: 3rem !important;
+        background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFFFFF 100%);
+        backdrop-filter: blur(20px);
+        height: 150%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 25%;
+        padding-left: 3%;
+        
+        margin: 0 -5%;
+        border-radius: 50px;
+
+        img {
+            width: 80%;
+            margin-left: -5px;
+        }
+    }
+        
+    .active {
+        color: $primary-contrast--dark;
+    }
+}
+
+.blackFade {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 15vh;
+    z-index: 1;
+    background: linear-gradient(to bottom, transparent 0%, #000 100%);
+    left: 0;
+}

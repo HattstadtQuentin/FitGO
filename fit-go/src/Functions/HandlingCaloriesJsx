@@ -1,0 +1,67 @@
+const address = "https://fit-go.herokuapp.com"
+const headers = { 'Content-Type': 'application/json' }
+
+
+export async function getRepasByDate(date, idUser) {
+    console.log(idUser);
+    let repas = [];
+    let url = new URL(address + '/repas_date');
+    url.searchParams.append("date",date);
+    url.searchParams.append("idUser",idUser);
+
+    const response = await fetch(url,{
+        method: 'GET',
+        headers: headers
+    });
+    repas = await response.json();
+
+    return repas.data;
+}
+
+export async function createRepas(type, idUser) {
+    let url = new URL(address + '/repas');
+    let res = []
+
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ type: type, idUser: idUser, date: new Date().toISOString()})
+    });
+    await response.json();
+}
+
+export async function getAlimentsByRepas(idRepas) {
+    let aliments = [];
+    let url = new URL(address + '/aliment_repas');
+    url.searchParams.append("idRepas",idRepas);
+
+    const response = await fetch(url,{
+        method: 'GET',
+        headers: headers
+    });
+    aliments = await response.json();
+
+    return aliments.data;
+}
+
+export async function createAliment(nom, calories, glucides, lipides, proteines, idRepas, quantite) {
+    let url = new URL(address + '/aliment');
+
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ nom: nom, calories: calories, glucides: glucides, lipides: lipides, proteines: proteines, idRepas: idRepas, quantite: quantite})
+    });
+    await response.json();
+}
+
+export async function deleteAliment(idAliment) {
+    let url = new URL(address + '/aliment');
+
+    const response = await fetch(url,{
+        method: 'DELETE',
+        headers: headers,
+        body: JSON.stringify({ idAliment: idAliment})
+    });
+    await response.json();
+}

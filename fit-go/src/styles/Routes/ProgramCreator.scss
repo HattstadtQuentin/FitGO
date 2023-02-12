@@ -1,0 +1,318 @@
+@import "../Global.scss";
+
+.Program {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10% 2%;
+    height: 88vh;
+    
+    overflow: hidden;
+
+    .header {
+        font-family: $titleFont;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        width: 100%;
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        .plusIcon {
+            border-radius: 50px;
+            width: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2%;
+            color: black;
+            background-color: $primary-contrast--dark;
+        }
+
+
+    }
+
+    .trier {
+        position: relative;
+        height: 10%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 15px;
+        width: 100%;
+        font-family: $poppins;
+        
+        .titleTrier {
+            font-size: 1rem;
+        }
+
+        select {
+            margin-left: 10px;
+            font-family: $poppins;
+            border: none;
+            border-radius: 25px;
+            padding: 2% 5%;
+            background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+            color: white;
+        }
+
+        option {
+            background-color: $secondary--dark;
+            font-family: $poppins;
+            border: none;
+            outline: none;
+          }
+          
+          option:hover {
+            background-color: $secondary--dark;
+          }
+
+        .trash {
+            position: absolute;
+            height: 40%;
+            right: 0;
+            top: 35%;
+
+            &:hover {
+                color: $chart-color-three;
+            }
+        }
+    }
+
+    .modalBackground {
+        position:absolute;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0, 0.5);
+
+        .modalCreate {
+            padding: 2%;
+            background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+            backdrop-filter: blur(20px);
+            width: 82%;
+            z-index: 2;
+            height: 70%;
+            border-radius: 25px;
+    
+            .modalTitle {
+                width: 100%;
+                height: 10%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.4rem;
+                font-family: $titleFont;
+            }
+    
+            .steps {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+                justify-content: space-around;
+                font-family: $poppins;
+                font-weight: 500;
+    
+                .step {
+                    padding: 5px 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50px;
+                    background-color: $secondary--dark;
+                }
+    
+                .ligne {
+                    width: 20%;
+                    height: 5px;
+                    background-color: $secondary--dark;
+                    border-radius: 25px;
+                    overflow: hidden;
+    
+                    .ligne-content {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 25px;
+                        //background-color: rgb(5, 114, 206);
+                        animation: indeterminateAnimation 1.5s infinite linear;
+                        transform-origin: 0% 50%;
+                    }
+    
+                    .current {
+                        background-color: $primary-contrast--dark;
+                    }
+    
+                    @keyframes indeterminateAnimation {
+                        0% {
+                          transform:  translateX(0) scaleX(0);
+                        }
+                        40% {
+                          transform:  translateX(0) scaleX(0.6);
+                        }
+                        100% {
+                          transform:  translateX(100%) scaleX(0.8);
+                        }
+                      }
+                }
+    
+    
+                .activated {
+                    background-color: $primary-contrast--dark;
+                    color: $secondary-font--dark;
+                }
+            }
+
+            .step {
+                display: flex;
+                flex-direction: column;
+                height: 82%;
+                justify-content: space-between;
+                
+
+                .titleStep {
+                    height: 20%;
+                    font-size: 1.4rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: $poppins;
+                }
+
+                .titleStep2 {
+                    height: 10% !important;
+                }
+
+                .contentStep2 {
+                    height: 90% !important;
+                    
+                }
+
+                .inputWrapper2 {
+                    height: 20% !important;
+                }
+
+
+                .contentStep {
+                    display: flex;
+                    flex-direction: column;
+                    height: 80%;
+                    
+                    justify-content: space-between;
+
+                    .inputWrapper {
+                        height: 80%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        .inputContainer {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            input {  
+                                width: 78%;
+                                border: none;
+                                border-radius: 25px;
+                                height: 50%;
+                                font-family: $poppins;
+                                color: white;
+                                padding: 2% 5% 2% 5%;
+                                text-align: left;
+                                font-size: 1rem;
+                                margin-right: 5px !important;
+                                background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                            }
+        
+                            textarea:focus, input:focus, select:focus{
+                                outline: 2px solid $primary-contrast--dark;
+                            }
+    
+                            select {
+                                font-family: $poppins;
+                                border: none;
+                                font-size: .9rem;
+                                border-radius: 25px;
+                                padding: 2% 5%;
+                                width: 90%;
+                                background: linear-gradient(360deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 99.99%, rgba(255, 255, 255, 0.25) 100%, rgba(17, 17, 17, 0.25) 100%, #FFF 100%);
+                                color: white;
+                            }
+                    
+                            option {
+                                background-color: $secondary--dark;
+                                font-family: $poppins;
+                                border: none;
+                                outline: none;
+                              }
+                              
+                              option:hover {
+                                background-color: $secondary--dark;
+                              }
+                        }
+                    }
+
+                    .statsWrapper {
+                        display: flex;
+                        flex-direction: row;
+                        width: 100%;
+                        justify-content: space-around;
+                        margin-bottom: 10px;
+
+                        .statsContainer {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            font-family: $silka;
+                            font-size: 0.9rem;
+                            color: $secondary-font--dark;
+                            .statsTitle {
+                                font-family: $poppins;
+                                color: white;
+                                font-size: 1rem;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+    
+                    .btnContainer {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+                        width: 100%;
+                        height: 10%;
+                        button {
+                            font-family: $poppins;
+                            color: $primary--dark;
+                            background: $primary-contrast--dark;
+                            border: none;
+                            outline: none;
+                            border-radius: 25px;
+                            width: 40%;
+                            height: 100%;
+                        }
+        
+                        .before {
+                            background-color: $secondary--dark;
+                            color: white;
+                        }
+
+                        .notReady {
+                            background-color: $third--dark;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+}
