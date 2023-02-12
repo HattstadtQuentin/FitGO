@@ -49,12 +49,12 @@
     .swiper {
         width: 100%;
         height: 60vh;
-        overflow:visible;
-
+        overflow:hidden;
+        padding-bottom: 10vh; 
+        margin-bottom: 10vh;
 
 
         .musculation {
-            overflow:visible;
             font-family: $globalFont;
             font-weight: 700;
             font-size: 2rem;

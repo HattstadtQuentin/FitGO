@@ -1,4 +1,4 @@
-import React, {useState, useRef } from 'react';
+import React, {useState, useRef, useEffect } from 'react';
 import '../styles/Routes/Activity.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,9 @@ import BackTraining from "../styles/Images/back_training.jpg";
 import LegTraining from "../styles/Images/leg_training.jpg";
 import FullBodyTraining from "../styles/Images/fullbody_training.jpg";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { getWorkouts } from '../Functions/HandlingWorkout';
+import ImageWorkoutType from '../Components/ImageWorkoutType';
+import TimeConvertor from '../Functions/TimeConvertor'; 
 
 import 'swiper/scss';
 import 'swiper/scss/scrollbar';
@@ -20,6 +23,15 @@ export default function Activity() {
     const [swiperInfos, setSwiperInfos] = useState(null);
     const [indexActivity, setIndexActivity] = useState(0);
     const [timer, setTimer] = useState( 0, 0, 0 );
+
+    const [workouts, setWorkouts] = useState(null);
+
+    useEffect(() => {
+        getWorkouts()
+          .then((res) => {
+            setWorkouts(res.data);
+          });
+      }, []);
 
     const options = [
         {
@@ -53,6 +65,8 @@ export default function Activity() {
             setIsGoodTimer(true);
         }
       };
+
+    
 
     return (
         <div className="Activity">
@@ -101,46 +115,22 @@ export default function Activity() {
                             <FontAwesomeIcon onClick={() => {select.current.selectedIndex = 0; setSelectedOption('')}} className="trash" icon={faTrashCan} />
                         </div>
                         <Scrollbars className="seanceList" style={{ height: "90%" }}>
-                            <motion.div
-                                whileTap={{ scale: 0.9 }}
-                                className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'chest') ? 'hide' : '')}
-                            >
-                                <img src={ChestTraining} />
-                                <div className='seanceInfos'>
-                                    <div className='titleSeance'>Seance Pec / Triceps</div>
-                                    <div className='desc'>5 exercices • 1h • 300kcal</div>
-                                </div>
-                            </motion.div>
-                            <motion.div
-                                whileTap={{ scale: 0.9 }}
-                                className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'back') ? 'hide' : '')}
-                            >
-                                <img src={BackTraining} />
-                                <div className='seanceInfos'>
-                                    <div className='titleSeance'>Seance Dos / Biceps</div>
-                                    <div className='desc'>6 exercices • 1h20min • 270kcal</div>
-                                </div>
-                            </motion.div>
-                            <motion.div
-                                whileTap={{ scale: 0.9 }}
-                                className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'leg') ? 'hide' : '')}
-                            >
-                                <img src={LegTraining} />
-                                <div className='seanceInfos'>
-                                    <div className='titleSeance'>Seance Jambes</div>
-                                    <div className='desc'>4 exercices • 40min • 400kcal</div>
-                                </div>
-                            </motion.div>
-                            <motion.div
-                                whileTap={{ scale: 0.9 }}
-                                className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'fullbody') ? 'hide' : '')}
-                            >
-                                <img src={FullBodyTraining} />
-                                <div className='seanceInfos'>
-                                    <div className='titleSeance'>Seance FullBody</div>
-                                    <div className='desc'>7 exercices • 2h • 600kcal</div>
-                                </div>
-                            </motion.div>
+                            {workouts !== null && workouts.map((workout, key) => {
+                                console.log(workout);
+                                return (
+                                    <motion.div
+                                    key={key}
+                                    whileTap={{ scale: 0.9 }}
+                                    className={'seanceCard ' + ((selectedOption !== '' && selectedOption !== 'chest') ? 'hide' : '')}
+                                    >
+                                        <ImageWorkoutType type={workout.type} />
+                                        <div className='seanceInfos'>
+                                            <div className='titleSeance'>{workout.nom}</div>
+                                            <div className='desc'>{workout.nbExo} exercices • <TimeConvertor seconds={workout.duree}/> • {workout.cal}kcal</div>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
                         </Scrollbars>
                     </div>
                 </SwiperSlide>

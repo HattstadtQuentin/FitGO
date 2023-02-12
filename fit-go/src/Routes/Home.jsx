@@ -3,7 +3,6 @@ import '../styles/Routes/Home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsis, faDumbbell, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { motion } from "framer-motion";
-import { getUsers } from '../Functions/FetchData';
 import InstallPWA from '../Components/InstallPwa';
 import { connect, register } from '../Functions/HandlingConnection';
 import useUserStore from '../Stores/useUserStore';
@@ -14,7 +13,6 @@ import { hashSync, compareSync, getRounds  } from "bcrypt-ts";
 
 export default function Home() {
     const setUserPersistant = useUserStore((state) => state.setUser);
-    const tmp = useUserStore((state) => state.id);
     const User = (id, email) => { return { id: id, email: email } }
     const [user, setUser] = useState(User(useUserStore((state) => state.id), useUserStore((state) => state.email)));
 
@@ -24,9 +22,6 @@ export default function Home() {
         console.log("updated");
     }
 
-    useEffect(() => {
-        console.log(tmp);
-    },[tmp]);
 
 
 	//Partie calcul des mois

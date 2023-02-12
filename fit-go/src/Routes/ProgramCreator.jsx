@@ -11,23 +11,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import MuscuProgram from '../Components/MuscuProgram';
 import Exercice from '../Components/Exercice';
+import TimeConvertor from '../Functions/TimeConvertor';
+import { getWorkouts, createWorkout, deleteWorkout, getExercices } from '../Functions/HandlingWorkout';
+import { getImageWorkoutTypeSrc } from '../Components/ImageWorkoutType';
+import { toast } from 'react-toastify';
+import StartedActivity from '../Components/StartedActivity';
 
 export default function ProgramCreator() {
+    const [startedActivity, setStartedActivity] = useState(null);
+
+    const [workouts, setWorkouts] = useState(null);
+    const [exercices, setExercices] = useState(null);
+
+    const [hotReload, setHotReload] = useState(true);
+
+    useEffect(() => {
+        getWorkouts()
+          .then((res) => {
+            setWorkouts(res.data);
+          });
+        getExercices()
+          .then((res) => {
+            setExercices(res.data);
+          });
+      }, [hotReload]);
+
     const options = [
     {
-        label: 'Pec / Triceps',
-        value: 'chest',
+        label: 'Push',
+        value: 'push',
     },
     {
-        label: 'Dos / Biceps',
-        value: 'back',
+        label: 'Pull',
+        value: 'pull',
+    },
+
+    {
+        label: 'Legs',
+        value: 'legs',
     },
     {
-        label: 'Jambes',
-        value: 'leg',
+        label: 'Upper Body',
+        value: 'upperbody',
     },
     {
-        label: 'FullBody',
+        label: 'Lower Body',
+        value: 'lowerbody',
+    },
+    {
+        label: 'Full Body',
         value: 'fullbody',
     },
     ];
@@ -64,15 +96,66 @@ export default function ProgramCreator() {
     useEffect(() => {   
     }, [exoSelected]);
 
+    const ExerciceObj = (exoId, nom, nbSeries, cal, duree) => { return { exoId: exoId, nom: nom, nbSeries: nbSeries, cal: cal, duree: duree} }
 
-
-    const handleSelectExo = (exoId, state) => {
-        if(state === false){
-            setExoSelected(prevExoSelected => prevExoSelected.filter((exoSelected) => exoSelected !== exoId));
-        } else {
-            setExoSelected(prevExoSelected => [...prevExoSelected, exoId]);
+    const handleSelectExo = (exoId, nom, nbSeries, cal, duree, state) => {
+        if(step == 2){
+            if(state === false){
+                setExoSelected(prevExoSelected => prevExoSelected.filter((exoSelected) => exoSelected.exoId !== exoId));
+            } else {
+                setExoSelected(prevExoSelected => [...prevExoSelected, ExerciceObj(exoId, nom, nbSeries, cal, duree)]);
+                
+            }
         }
     }
+
+    const getCreatedWorkoutInfos = () => {
+        var totalDuration = 0;
+        var totalCal = 0;
+        exoSelected.map(exercice => {
+            totalDuration += exercice.duree;
+            totalCal += exercice.cal;
+        });
+
+        return { nbExo: exoSelected.length, duration: totalDuration, cal: totalCal};
+    }
+
+    const handleCreateWorkout = () => {
+        createWorkout(seanceName, seanceType, getCreatedWorkoutInfos().nbExo, getCreatedWorkoutInfos().duration, getCreatedWorkoutInfos().cal, exoSelected[0].exoId, exoSelected[1]? exoSelected[1].exoId : null, exoSelected[2]? exoSelected[2].exoId : null, exoSelected[3]? exoSelected[3].exoId : null, exoSelected[4]? exoSelected[4].exoId : null, exoSelected[5]? exoSelected[5].exoId : null, exoSelected[6]? exoSelected[6].exoId : null, exoSelected[7]? exoSelected[7].exoId : null, exoSelected[8]? exoSelected[8].exoId : null, exoSelected[9]? exoSelected[9].exoId : null,).then(() => {
+            setIsModalActive(false);
+            setStep(1);
+            setHotReload(!hotReload);
+            setExoSelected([]);
+            setSeanceName('');
+            setSeanceType('');
+            toast.success("Séance Crée !", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
+        });
+        }
+    
+        const handleDeleteWorkout = (idProgramme, setHotReloadChild, hotReload) => {
+            deleteWorkout(idProgramme).then(() => {
+                setHotReloadChild(!hotReload);
+                toast.success("Séance Supprimé !", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'dark',
+                });
+            });
+            }
 
     return (
         <div className="Program">
@@ -88,23 +171,25 @@ export default function ProgramCreator() {
                 <div className='titleTrier'>Trier par</div>
                 <select
                     ref={select}
-                    value={selectedOption}
+                    defaultValue={selectedOption}
                     onChange={e => setSelectedOption(e.target.value)}
                 >
+                    <option className='.select-items' value='Type de seance' disabled hidden style={{ fontFamily: 'Arial' }}>Type de seance</option>
                     {options.map(o => (
                     <option className='.select-items' key={o.value} value={o.value} style={{ fontFamily: 'Arial' }}>{o.label}</option>
                     ))}
                 </select>
                 <motion.div className='seeLess' whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}>
-                    <FontAwesomeIcon onClick={() => {select.current.selectedIndex = 0; setSelectedOption('')}} className="trash" icon={faTrashCan} />
+                                    whileTap={{ scale: 0.9 }} onClick={() => {select.current.selectedIndex = 0; setSelectedOption('Type de seance')}}>
+                    <FontAwesomeIcon  className="trash" icon={faTrashCan}  onClick={() => {select.current.selectedIndex = 0; setSelectedOption('Type de seance')}}/>
                 </motion.div>
             </div>
             <Scrollbars style={{ height: "90%", width: "90%" }}>
-                <MuscuProgram title={"Seance Pec / Triceps"} nbExos={5} cal={300} duration={1} image={ChestTraining} expanded={false} visible={true}/>
-                <MuscuProgram title={"Seance Dos / Biceps"} nbExos={6} cal={270} duration={1.20} image={BackTraining} expanded={false} visible={true}/>
-                <MuscuProgram title={"Seance Jambes"} nbExos={4} cal={400} duration={.40} image={LegTraining} expanded={false} visible={true}/>
-                <MuscuProgram title={"Seance FullBody"} nbExos={7} cal={600} duration={2} image={FullBodyTraining} expanded={false} visible={true}/>
+                {workouts !== null && workouts.map((workout, key) => {
+                    return (
+                        <MuscuProgram key={key} idProgramme={workout.idProgramme} title={workout.nom} nbExos={workout.nbExo} cal={workout.cal} duration={workout.duree} image={getImageWorkoutTypeSrc(workout.type)} expanded={false} visible={true} global={workout.global} handleDelete={handleDeleteWorkout} setHotReload={setHotReload} hotReload={hotReload} startActivity={setStartedActivity} />
+                    );
+                })}
             </Scrollbars>
 
             {isModalActive &&
@@ -186,9 +271,11 @@ export default function ProgramCreator() {
                                         </div>
                                     </div>
                                     <Scrollbars style={{ height: "90%", width: "100%", marginTop: "-10%" }}>
-                                        <Exercice id={1} title={"Tirage Nuque"} nbSerie={5} cal={300} duration={20} image={ChestTraining} visible={true} handleSelected={handleSelectExo} recap={false}/>
-                                        <Exercice id={2} title={"Developpé Couché"} nbSerie={4} cal={270} duration={40} image={BackTraining} visible={true} handleSelected={handleSelectExo} recap={false}/>
-                                        <Exercice id={3} title={"Presse Jambe"} nbSerie={4} cal={400} duration={30} image={LegTraining} visible={true} handleSelected={handleSelectExo} recap={false}/>
+                                        {exercices !== null && exercices.map((exercice, key) => {
+                                            return (
+                                                 <Exercice key={key} id={exercice.idExo} title={exercice.nom} nbSerie={exercice.nbSeries} cal={exercice.cal} duration={(exercice.tempsRepos * 3 ) * exercice.nbSeries} image={ChestTraining} visible={true} handleSelected={handleSelectExo} recap={false}/>
+                                            );
+                                        })}
                                     </Scrollbars>
                                     <div className='btnContainer'>
                                         <motion.button
@@ -203,7 +290,7 @@ export default function ProgramCreator() {
                                             className={!isGoodStep2 ? 'notReady' : ''}
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
-                                            onClick={() => setStep(3)}
+                                            onClick={() => isGoodStep2 ? setStep(3) : null}
                                         >
                                                 Suivant
                                         </motion.button>
@@ -221,7 +308,7 @@ export default function ProgramCreator() {
                                     <div class='statsWrapper'>
                                         <div className='statsContainer'>
                                             <div className='statsTitle'>
-                                                5
+                                                {getCreatedWorkoutInfos().nbExo}
                                             </div>
                                             <div className='statsDesc'>
                                                 Exercices
@@ -229,7 +316,7 @@ export default function ProgramCreator() {
                                         </div>
                                         <div className='statsContainer'>
                                             <div className='statsTitle'>
-                                                2h
+                                                <TimeConvertor seconds={getCreatedWorkoutInfos().duration}/>
                                             </div>
                                             <div className='statsDesc'>
                                                 Durée
@@ -237,7 +324,7 @@ export default function ProgramCreator() {
                                         </div>
                                         <div className='statsContainer'>
                                             <div className='statsTitle'>
-                                                320
+                                                {getCreatedWorkoutInfos().cal}
                                             </div>
                                             <div className='statsDesc'>
                                                 Calories
@@ -245,9 +332,11 @@ export default function ProgramCreator() {
                                         </div>
                                     </div>
                                     <Scrollbars style={{ height: "80%", width: "100%"}}>
-                                        <Exercice id={1} title={"Tirage Nuque"} nbSerie={5} cal={300} duration={20} image={ChestTraining} visible={true} handleSelected={handleSelectExo} recap={true}/>
-                                        <Exercice id={2} title={"Developpé Couché"} nbSerie={4} cal={270} duration={40} image={BackTraining} visible={true} handleSelected={handleSelectExo} recap={true}/>
-                                        <Exercice id={3} title={"Presse Jambe"} nbSerie={4} cal={400} duration={30} image={LegTraining} visible={true} handleSelected={handleSelectExo} recap={true}/>
+                                        {exoSelected.map((exercice, key) => {
+                                            return (
+                                                 <Exercice key={key} id={exercice.exoId} title={exercice.nom} nbSerie={exercice.nbSeries} cal={exercice.cal} duration={exercice.duree} image={ChestTraining} visible={true} handleSelected={handleSelectExo} recap={true}/>
+                                            );
+                                        })}
                                     </Scrollbars>
                                     <div className='btnContainer'>
                                         <motion.button
@@ -261,7 +350,7 @@ export default function ProgramCreator() {
                                         <motion.button
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
-                                            onClick={() => setStep(2)}
+                                            onClick={handleCreateWorkout}
                                         >
                                                 Créer
                                         </motion.button>
@@ -272,6 +361,9 @@ export default function ProgramCreator() {
 
                     </div>
                 </div>        
+            }
+            {
+                startedActivity !== null && <StartedActivity idProgramme={startedActivity} quit={setStartedActivity}/>
             }
         </div>
     );

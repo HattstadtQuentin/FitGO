@@ -3,8 +3,9 @@ import '../styles/Components/MuscuProgram.scss';
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import TimeConvertor from '../Functions/TimeConvertor';
 
-export default function MuscuProgram({title, nbExos, cal, duration, image, expanded, visible}) {
+export default function MuscuProgram({idProgramme, title, nbExos, cal, duration, image, expanded, visible, global, handleDelete, setHotReload, hotReload, startActivity}) {
     const [isExpanded, setIsExpanded] = useState(expanded);
     return (
         isExpanded ?
@@ -18,15 +19,19 @@ export default function MuscuProgram({title, nbExos, cal, duration, image, expan
                 <div className='left'>
                     <img src={image}/>
                     <div className='btnContainer'>
+                        { global === 'N' &&
+                            <motion.button
+                                className='edition'
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => handleDelete(idProgramme, setHotReload, hotReload)}>
+                                    Supprimer
+                            </motion.button>
+                        }
                         <motion.button
-                            className='edition'
                             whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                                Editer
-                        </motion.button>
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => startActivity(idProgramme)}>
                                 Lancer
                         </motion.button>
                     </div>
@@ -37,7 +42,7 @@ export default function MuscuProgram({title, nbExos, cal, duration, image, expan
                         <div>Exercices</div>
                     </div>
                     <div className='infoCard'>
-                        <div className='title'>{duration}h</div>
+                        <div className='title'><TimeConvertor seconds={duration}/></div>
                         <div>Durée</div>
                     </div>
                     <div className='infoCard'>
@@ -54,7 +59,7 @@ export default function MuscuProgram({title, nbExos, cal, duration, image, expan
             <img src={image} />
             <div className='seanceInfos'>
                 <div className='titleSeance'>{title}</div>
-                <div className='desc'>{nbExos} exercices • {duration}h • {cal}kcal</div>
+                <div className='desc'>{nbExos} exercices • <TimeConvertor seconds={duration}/> • {cal}kcal</div>
             </div>
             <motion.div className='seeMore' whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }} onClick={() => setIsExpanded(true)}><FontAwesomeIcon icon={faAngleRight} /></motion.div>

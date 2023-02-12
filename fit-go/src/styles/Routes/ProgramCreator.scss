@@ -6,6 +6,8 @@
     align-items: center;
     padding: 10% 2%;
     height: 88vh;
+    
+    overflow: hidden;
 
     .header {
         font-family: $titleFont;
