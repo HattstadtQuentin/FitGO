@@ -11,7 +11,7 @@ export default function NavBar() {
       <div className="NavBar">
           <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faHouse} /></NavLink>
           <NavLink to="/statistic" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faChartPie} /></NavLink>
-          <NavLink to="/activity" className={({ isActive }) => isActive ? 'active play' : 'play'}><img src={FitGo}/></NavLink>
+          <NavLink to="/activity" className={({ isActive }) => isActive ? 'active play' : 'play'}><img src={FitGo} alt="FitGo Logo"/></NavLink>
           <NavLink to="/program" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faDumbbell} /></NavLink>
           <NavLink to="/calories" className={({ isActive }) => isActive ? 'active' : ''}><FontAwesomeIcon icon={faBowlFood} /></NavLink>
       </div>

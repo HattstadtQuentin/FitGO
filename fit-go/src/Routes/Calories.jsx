@@ -31,7 +31,7 @@ export default function Calories() {
                 <div className="title">
                     Calories
                 </div>
-                <details className="custom-select">
+                {/* <details className="custom-select">
                     <summary className="radios">
                         <input type="radio" name="item" id="default" title="24 Heures" checked/>
                         <input type="radio" name="item" id="item1" title="7 jours"/>
@@ -54,7 +54,7 @@ export default function Calories() {
                             </label>
                         </li>
                     </ul>
-                </details>
+                </details> */}
             </div>
             <div className="StatsContainer">
                 <div className='StatsGlobal'>

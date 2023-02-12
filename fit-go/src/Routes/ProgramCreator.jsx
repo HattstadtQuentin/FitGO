@@ -33,7 +33,7 @@ export default function ProgramCreator() {
     ];
 
     const select = useRef(null);
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('Type de seance');
     const handleChangeStep = step => {
         setStep(step);
     }
@@ -49,7 +49,7 @@ export default function ProgramCreator() {
     const [exoSelected, setExoSelected] = useState([]); 
 
     useEffect(() => {   
-        if(seanceName !== '' && seanceType !== ''){
+        if(seanceName !== '' && seanceType !== 'Type de seance'){
             setIsGoodStep1(true);
         } else {
             setIsGoodStep1(false);
@@ -62,7 +62,6 @@ export default function ProgramCreator() {
     }, [seanceName, seanceType, exoSelected]);
 
     useEffect(() => {   
-        console.log(exoSelected);
     }, [exoSelected]);
 
 
@@ -92,7 +91,6 @@ export default function ProgramCreator() {
                     value={selectedOption}
                     onChange={e => setSelectedOption(e.target.value)}
                 >
-                    <option className='.select-items' value='' selected disabled hidden>Type de seance</option>
                     {options.map(o => (
                     <option className='.select-items' key={o.value} value={o.value} style={{ fontFamily: 'Arial' }}>{o.label}</option>
                     ))}

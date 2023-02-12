@@ -39,6 +39,13 @@
             background: $primary-contrast--dark;
         }
 
+        .settingsBtn {
+            border: none;
+            outline: none;
+            color:#FFF;
+            background: none;
+        }
+
         img {
             max-width: 20%;
             height: 100%;
@@ -335,6 +342,32 @@
                             color: white;
                         }
                     }
+                }
+            }
+
+            .settings {
+                display: flex;
+                height: 96%;
+                width: 96%;
+                flex-direction: column;
+                gap: 20%;
+                align-items: center;
+                padding: 2%;
+
+                .settingsTitle {
+                    font-family: $poppins;
+                    font-size: 2rem;
+                }
+
+                button {
+                    font-family: $poppins;
+                    color: $primary--dark;
+                    background: $primary-contrast--dark;
+                    border: none;
+                    outline: none;
+                    border-radius: 25px;
+                    width: 60%;
+                    height: 15%;
                 }
             }
         }

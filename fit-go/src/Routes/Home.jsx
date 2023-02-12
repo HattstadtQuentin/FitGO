@@ -1,10 +1,34 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import '../styles/Routes/Home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsis, faDumbbell, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsis, faDumbbell, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { motion } from "framer-motion";
+import { getUsers } from '../Functions/FetchData';
+import InstallPWA from '../Components/InstallPwa';
+import { connect, register } from '../Functions/HandlingConnection';
+import useUserStore from '../Stores/useUserStore';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { hashSync, compareSync, getRounds  } from "bcrypt-ts";
+ 
 
 export default function Home() {
+    const setUserPersistant = useUserStore((state) => state.setUser);
+    const tmp = useUserStore((state) => state.id);
+    const User = (id, email) => { return { id: id, email: email } }
+    const [user, setUser] = useState(User(useUserStore((state) => state.id), useUserStore((state) => state.email)));
+
+    const handleUpdateUser = (id, email) => {
+        setUserPersistant(id, email);
+        setUser(User(id, email));
+        console.log("updated");
+    }
+
+    useEffect(() => {
+        console.log(tmp);
+    },[tmp]);
+
+
 	//Partie calcul des mois
 	function getDaysInMonth(year, month) {
 		return new Date(year, month, 0).getDate();
@@ -24,15 +48,10 @@ export default function Home() {
 	};
 
 	const [month, setMonth] = useState(current.getMonth());
-	const [year, setYear] = useState(current.getFullYear());
 
 
 	var firstOfMonth = new Date(current.getFullYear(), current.getMonth(), 1);
 	var divJours = [];
-
-	const min = -1;
-	const max = 3;
-	const rand = min + Math.random() * (max - min);
 
 	const item = {
 		hidden: { y: 20, opacity: 0 },
@@ -41,30 +60,15 @@ export default function Home() {
 			opacity: 1,
 		},
 	};
-	const [modalOpen, setModalOpen] = useState(false);
 
-	const close = () => {
-		setModalOpen(false);
-		console.log("Close modal");
-	};
-	const open = () => {
-		setModalOpen(true);
-		console.log("Open modal");
-	};
 
 	const onClickDivJour = (e) => {
 		// if(modalOpen ? close() : open()
-		console.log("Position y: " + e.clientY);
-	};
-	const onClickDivEvent = (e) => {
-		// if(modalOpen ? close() : open()
-		console.log("Position y EVENT: " + e.clientY);
 	};
 
     const days = [
         "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"
     ]
-    console.log(((firstOfMonth.getDay()-8)%7)*-1);
 
     for(var i = 0; i < 7; i++){
         divJours.push(
@@ -121,10 +125,140 @@ export default function Home() {
     }
 
     const [isModalActive, setIsModalActive] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(useUserStore((state) => state.id) !== null);
     const [isConnecting, setIsConnecting] = useState(true);
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+
+    const emailInputRef = useRef();
+    const mdpInputRef = useRef();
+    const handleConnection = () => {
+        const email = emailInputRef.current.value;
+        const mdp = mdpInputRef.current.value;
+        if(email !== '' && mdp !== '')
+        {
+            connect(email).then((res) => {
+                if(res === undefined){
+                    toast.error("Aucun compte existant", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'dark',
+                    });
+                } else {
+                    console.log(getRounds(res.mdp));
+                    if(compareSync(mdp, res.mdp))
+                    {   
+                        handleUpdateUser(res.idUser, email);
+                        setIsLogin(true);
+                        setIsModalActive(false);
+                        toast.success("Connecté !", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                        });
+                    }
+                    else {
+                        toast.error("Mot de passe incorrect", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                        });
+                    }
+                }
+            });
+        } else {
+            toast.error("Tout les champs ne sont pas renseignés", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
+        }
+    }
+
+    const handleRegister = () => {
+        const email = emailInputRef.current.value;
+        const mdp = mdpInputRef.current.value;
+        if(email !== '' && mdp !== '')
+        {
+            connect(email).then((res) => {
+                if(res === undefined){
+                    register(emailInputRef.current.value,  hashSync(mdp, 8)).then((res) => {
+                        handleUpdateUser(res.id, email);
+                        setIsLogin(true);
+                        setIsModalActive(false);
+                        toast.success("Inscription réussie !", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                        });
+                    });
+                } else {
+                    toast.error("Pseudo déjà utilisé", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'dark',
+                    });
+                }
+            });
+        } else {
+            toast.error("Tout les champs ne sont pas renseignés", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
+        }
+    }
+
+    const handleDisconnect = () => {
+        handleUpdateUser(null, null);
+        setIsLogin(false);
+        setIsModalActive(false);
+        toast.success("Deconnecté !", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+        });
+    }
 
     return (
         <div className="Home">
@@ -132,7 +266,7 @@ export default function Home() {
                     <div className="title">
                         Home
                     </div>
-                    <FontAwesomeIcon icon={faBell} />
+                    <InstallPWA />
             </div>
             { isLogin &&
                 <div className='personBar'>
@@ -140,8 +274,15 @@ export default function Home() {
                         <img src="https://thispersondoesnotexist.com/image"/>
                         <div className='infos'>
                             <div className='top'>
-                                <div className='name'>Hattstadt Quentin</div>
-                                <FontAwesomeIcon icon={faEllipsis} />
+                                <div className='name'>{user.email}</div>
+                                <motion.button
+                                    className='settingsBtn'
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    onClick={() => setIsModalActive(true)}
+                                >
+                                    <FontAwesomeIcon icon={faEllipsis} />
+                                </motion.button>
                             </div>
                             <div className='bottom'>
                                 <FontAwesomeIcon icon={faDumbbell} /> Scéance Pec • Hier
@@ -224,12 +365,12 @@ export default function Home() {
                                 Se connecter
                             </div>
                             <div className='contentLogin'>
-                                <div class='inputWrapper'>
+                                <div className='inputWrapper'>
                                     <div className='inputContainer'>
-                                        <input value={loginEmail} type="text" placeholder='Email' onChange={e => setLoginEmail(e.target.value)}/>
+                                        <input ref={emailInputRef} value={loginEmail} type="text" placeholder='Pseudo' onChange={e => setLoginEmail(e.target.value)}/>
                                     </div>
                                     <div className='inputContainer'>
-                                        <input value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
+                                        <input ref={mdpInputRef} value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
                                     </div>
                                 </div>
                                 <div className='subtitle'>Vous n'avez pas de compte ? <motion.p whileHover={{ scale: 1.1 }}
@@ -239,7 +380,7 @@ export default function Home() {
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
-                                        onClick={null}
+                                        onClick={handleConnection}
                                     >
                                             Connection
                                     </motion.button>
@@ -253,12 +394,12 @@ export default function Home() {
                                 S'incrire
                             </div>
                             <div className='contentLogin'>
-                                <div class='inputWrapper'>
+                                <div className='inputWrapper'>
                                     <div className='inputContainer'>
-                                        <input value={loginEmail} type="text" placeholder='Email' onChange={e => setLoginEmail(e.target.value)}/>
+                                        <input ref={emailInputRef} value={loginEmail} type="text" placeholder='Pseudo' onChange={e => setLoginEmail(e.target.value)}/>
                                     </div>
                                     <div className='inputContainer'>
-                                        <input value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
+                                        <input ref={mdpInputRef} value={loginPassword} type="password" placeholder='Mot de passe' onChange={e => setLoginPassword(e.target.value)}/>
                                     </div>
                                 </div>
                                 <div className='subtitle'>Vous avez déjà un compte ? <motion.p whileHover={{ scale: 1.1 }}
@@ -268,7 +409,7 @@ export default function Home() {
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
-                                        onClick={null}
+                                        onClick={handleRegister}
                                     >
                                             S'inscrire
                                     </motion.button>
@@ -277,24 +418,17 @@ export default function Home() {
                     </div>
                     }
                     { isLogin &&
-                        <div className='personBar'>
-                            
-                                <motion.button
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    onClick={() => setIsModalActive(true)}
-                                >
-                                        <FontAwesomeIcon icon={faRightToBracket} />
-                                </motion.button>
-                                <div className='infos'>
-                                    <div className='top'>
-                                        <div className='name'>Connecter vous</div>
-                                    </div>
-                                    <div className='bottom'>
-                                        Pour sauvegarder vos données
-                                    </div>
-                                </div>
-                            
+                        <div className='settings'>
+                            <div className='settingsTitle'>
+                                Paramètres
+                            </div>
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={handleDisconnect}
+                            >
+                                    Deconnexion <FontAwesomeIcon icon={faRightFromBracket} />
+                            </motion.button>
                         </div>
                     }
                     </div>
