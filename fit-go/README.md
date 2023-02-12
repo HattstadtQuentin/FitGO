@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Application FitGo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projet réalisé par HATTSTADT QUENTIN & GILLIG HUGO
 
-## Available Scripts
+## Lancement du projet : 
 
-In the project directory, you can run:
+  1) Cloner le projet 
+  2) Dans le repertoire du projet, faire les commandes suivantes (en mode privilège): 
 
-### `npm start`
+  `npm install`
+  
+  `npm run build`
+  
+  `npm run start`
+   
+  (si des problèmes de modules sont constatés, suppprimez le repertoire node_module et refaire les 3 commandes)
+  
+  (il est possible qu'il faut rajouter la commande `npm install sass` si besoin)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## L'application : 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+L'application est composée de 5 pages.
 
-### `npm test`
+### Page HOME :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+On y retrouve un bouton permettant de se connecter à son compte.
+Une vue sur ses prochaines séances ainsi que sur son planning sont apparentes mais non fonctionnelles, se sera pour une V2.
 
-### `npm run build`
+### Page GESTION PROGRAMME :
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+On y retrouve un listing des programmes déjà existants ainsi qu'un espace pour en créer des nouveaux. C'est également ici qu'on va s'attribuer des programmes à faire pour nos prochaines séances.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Page CALORIE :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+On y retrouve un résumé de nos repas de la journées et ainsi voir notre apport/perte calorique quotidien et le pourcentage de glucides, lipides et protéines de nos aliments. Des suggestions sont égalements présentes.
 
-### `npm run eject`
+### Page ACTIVITE :
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+C'est ici qu'on va pouvoir lancer un programme et commencer une séance. Les exercices à faire vont apparaitre dans l'ordre avec les différents temps de repos et les nombres de répétitions/séries à respecter et éffectuer.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Page STATISTIQUES :
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Non développé, car lié au planning prochainement développé dans une V2.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
