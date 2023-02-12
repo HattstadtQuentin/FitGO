@@ -33,6 +33,7 @@ export default function Calories() {
     const [totalGlu, setTotalGlu] = useState(0);
     const [totalProt, setTotalProt] = useState(0);
     const [totalLip, setTotalLip] = useState(0);
+    const [tot, setTot] = useState(0);
     const [totalCalMAT, setTotalCalMAT] = useState(0);
     const [totalGluMAT, setTotalGluMAT] = useState(0);
     const [totalProtMAT, setTotalProtMAT] = useState(0);
@@ -55,6 +56,8 @@ export default function Calories() {
         var tmpGLU = totalGluMAT + totalGluMID + totalGluSOIR + totalGluSNA;
         var tmpProt = totalProtMAT + totalProtMID + totalProtSOIR + totalProtSNA;
         var tmpLip = totalLipMAT + totalLipMID + totalLipSOIR + totalLipSNA;
+
+        setTot(tmpGLU + tmpProt + tmpLip);
         setTotalCal(totalCalMAT + totalCalMID + totalCalSOIR + totalCalSNA);
         setTotalGlu(totalGluMAT + totalGluMID + totalGluSOIR + totalGluSNA);
         setTotalProt(totalProtMAT + totalProtMID + totalProtSOIR + totalProtSNA);
@@ -99,7 +102,7 @@ export default function Calories() {
     const data = {
         datasets: [
         {
-            data: [10, 60, 30],
+            data: [(totalLip * 100) / tot, (totalGlu * 100) / tot, (totalProt * 100) / tot],
             backgroundColor: [
             '#01E8D1',
             '#917FFC',
@@ -167,7 +170,7 @@ export default function Calories() {
                                     </div>
                                 </div>
                                 <div className='percentage'>
-                                    60%
+                                {Math.round((totalGlu * 100) / tot)}%
                                 </div>
                             </div>
                             <div className='label'>
@@ -178,7 +181,7 @@ export default function Calories() {
                                     </div>
                                 </div>
                                 <div className='percentage'>
-                                    30%
+                                    {Math.round((totalProt * 100) / tot)}%
                                 </div>
                             </div>
                             <div className='label'>
@@ -189,7 +192,7 @@ export default function Calories() {
                                     </div>
                                 </div>
                                 <div className='percentage'>
-                                    10%
+                                    {Math.round((totalLip * 100) / tot)}
                                 </div>
                             </div>
                         </div>
