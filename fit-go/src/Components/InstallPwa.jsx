@@ -3,38 +3,30 @@ import '../styles/Components/InstallPWA.scss';
 import { motion } from "framer-motion";
 
 export default function InstallPWA() {
-  const [supportsPWA, setSupportsPWA] = useState(false);
-  const [promptInstall, setPromptInstall] = useState(null);
-
-  useEffect(() => {
-    const handler = e => {
-      e.preventDefault();
-      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {  
-        setSupportsPWA(false);   
-      } else {
+    const [supportsPWA, setSupportsPWA] = useState(false);
+    const [promptInstall, setPromptInstall] = useState(null);
+  
+    useEffect(() => {
+      const handler = e => {
+        e.preventDefault();
         setSupportsPWA(true);
-      }  
-      setPromptInstall(e);
+        setPromptInstall(e);
+      };
+      window.addEventListener("beforeinstallprompt", handler);
+  
+      return () => window.removeEventListener("transitionend", handler);
+    }, []);
+  
+    const onClick = evt => {
+      evt.preventDefault();
+      if (!promptInstall) {
+        return;
+      }
+      promptInstall.prompt();
     };
-    window.addEventListener("beforeinstallprompt", handler);
-
- 
-
-    return () => window.removeEventListener("transitionend", handler);
-  }, []);
-
-  const onClick = evt => {
-    evt.preventDefault();
-    if (!promptInstall) {
-      return;
+    if (!supportsPWA) {
+      return null;
     }
-    promptInstall.prompt();
-  };
-
-  if (!supportsPWA) {
-    return null;
-  }
-
   return (
     <motion.button
       whileHover={{ scale: 1.1 }}

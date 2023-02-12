@@ -35,6 +35,7 @@ export default function App(){
         <Route exact path="/program" element={<ProgramCreator/>}/>
         <Route exact path="/calories" element={<Calories/>}/>
         <Route path="/calories/food/:menu" element={<SearchFood />} />
+        <Route path="/" element={<Home/>}/>
       </Routes>
       <NavBar/>
     </div>
